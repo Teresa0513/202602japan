@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>2026 JP JOURNEY</title>
+    <title>2026 JP TRAVEL APP</title>
     <style>
         :root {
             --bg: #FAF9F6;
@@ -23,12 +23,13 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: -apple-system, system-ui, sans-serif; scroll-behavior: smooth; }
         body { background-color: var(--bg); color: var(--navy); margin: 0; padding: 0; overflow-x: hidden; }
 
+        /* --- 頂部導航 --- */
         .app-header {
             position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             z-index: 2000; padding-top: var(--safe-top); border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .header-title { padding: 15px 20px 5px; font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
+        .header-title { padding: 15px 20px 5px; font-size: 1rem; font-weight: 800; letter-spacing: 2px; text-align: center; }
 
         .date-slider { display: flex; overflow-x: auto; padding: 5px 15px 15px; gap: 8px; -webkit-overflow-scrolling: touch; }
         .date-slider::-webkit-scrollbar { display: none; }
@@ -39,14 +40,15 @@
         }
         .date-btn.active { background: var(--navy); color: white; border-color: var(--navy); transform: scale(1.05); }
 
+        /* --- 內容區域 --- */
         .main-view { padding: calc(150px + var(--safe-top)) 15px calc(100px + var(--safe-bottom)); max-width: 600px; margin: 0 auto; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        .day-section { margin-bottom: 40px; scroll-margin-top: 170px; }
+        .day-section { margin-bottom: 45px; scroll-margin-top: 175px; }
         .day-meta { margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
         .day-meta h2 { font-size: 1.4rem; margin: 0; font-weight: 800; }
-        .weather { font-size: 0.8rem; background: white; padding: 4px 10px; border-radius: 20px; border: 1px solid #EEE; display: flex; align-items: center; gap: 4px; }
+        .weather { font-size: 0.8rem; background: white; padding: 4px 10px; border-radius: 20px; border: 1px solid #EEE; display: flex; align-items: center; gap: 4px; color: #555; font-weight: 600; }
 
         .card { background: white; border-radius: 24px; box-shadow: 0 8px 25px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.02); }
         .card-row { display: flex; align-items: center; padding: 20px 18px; border-bottom: 1px solid #FAFAFA; position: relative; }
@@ -54,19 +56,23 @@
 
         .info-body { flex: 1; padding-right: 12px; }
         .type-tag { font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; margin-bottom: 5px; display: inline-block; }
-        .time { font-size: 0.75rem; color: var(--grey); font-weight: 700; margin-bottom: 2px; display: block; }
         .title { font-size: 1rem; font-weight: 700; line-height: 1.4; }
         
-        /* 導遊職責：攻略與時刻表 */
         .insight { background: #FAF9F6; border-radius: 12px; padding: 12px; margin-top: 10px; font-size: 0.85rem; border-left: 3px solid var(--accent); }
         .insight b { color: var(--accent); }
-        
-        .train-schedule { width: 100%; margin-top: 8px; border-collapse: collapse; font-size: 0.8rem; }
-        .train-schedule th { text-align: left; color: var(--grey); padding-bottom: 5px; font-weight: normal; }
-        .train-schedule td { padding: 4px 0; border-bottom: 1px solid #F0F0F0; }
-        .train-schedule tr:last-child td { border-bottom: none; }
-        .highlight-time { color: var(--accent); font-weight: bold; }
 
+        /* 時刻表按鈕與內容 */
+        .toggle-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 12px; margin-top: 10px; background: #FFF;
+            border: 1px solid var(--navy); color: var(--navy); border-radius: 12px;
+            font-size: 0.85rem; font-weight: bold; cursor: pointer;
+        }
+        .schedule-content { display: none; margin-top: 10px; }
+        .train-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .train-table td { padding: 8px 0; border-bottom: 1px solid #F0F0F0; }
+
+        /* 修正圖標大小 */
         .nav-btn { 
             width: 44px; height: 44px; background: var(--navy); color: white; border-radius: 14px; 
             display: flex; align-items: center; justify-content: center; text-decoration: none; flex-shrink: 0;
@@ -74,12 +80,12 @@
         }
         .nav-btn svg { width: 22px !important; height: 22px !important; fill: white; }
 
+        /* 底部欄修正 */
         .tab-bar { position: fixed; bottom: 0; width: 100%; background: white; display: flex; padding: 10px 0 calc(10px + var(--safe-bottom)); border-top: 1px solid #EEE; z-index: 2000; }
-        .tab-item { flex: 1; text-align: center; text-decoration: none; color: var(--grey); font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-item { flex: 1; text-align: center; text-decoration: none; color: var(--grey); font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .tab-item.active { color: var(--navy); font-weight: 800; }
-        .tab-item svg { width: 24px !important; height: 24px !important; fill: currentColor; }
+        .tab-item svg { width: 24px !important; height: 24px !important; fill: currentColor; display: block; }
 
-        /* 工具箱頁面 */
         .tool-box { background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; }
         .tool-h { font-size: 1rem; font-weight: 800; border-bottom: 2px solid var(--bg); padding-bottom: 10px; margin-bottom: 15px; }
         .tool-r { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #EEE; font-size: 0.9rem; }
@@ -88,21 +94,21 @@
 <body>
 
 <div class="app-header" id="appH">
-    <div class="header-title">2026 JP JOURNEY</div>
+    <div class="header-title">2026 JOURNEY APP</div>
     <div class="date-slider" id="dateS">
-        <a href="#d1" class="date-btn active"><span>12</span></a>
-        <a href="#d2" class="date-btn"><span>13</span></a>
-        <a href="#d3" class="date-btn"><span>14</span></a>
-        <a href="#d4" class="date-btn"><span>15</span></a>
-        <a href="#d5" class="date-btn"><span>16</span></a>
-        <a href="#d6" class="date-btn"><span>17</span></a>
-        <a href="#d7" class="date-btn"><span>18</span></a>
-        <a href="#d8" class="date-btn"><span>19</span></a>
-        <a href="#d9" class="date-btn"><span>20</span></a>
-        <a href="#d10" class="date-btn"><span>21</span></a>
-        <a href="#d11" class="date-btn"><span>22</span></a>
-        <a href="#d12" class="date-btn"><span>23</span></a>
-        <a href="#d13" class="date-btn"><span>24</span></a>
+        <a href="#day1" class="date-btn active"><span>12</span></a>
+        <a href="#day2" class="date-btn"><span>13</span></a>
+        <a href="#day3" class="date-btn"><span>14</span></a>
+        <a href="#day4" class="date-btn"><span>15</span></a>
+        <a href="#day5" class="date-btn"><span>16</span></a>
+        <a href="#day6" class="date-btn"><span>17</span></a>
+        <a href="#day7" class="date-btn"><span>18</span></a>
+        <a href="#day8" class="date-btn"><span>19</span></a>
+        <a href="#day9" class="date-btn"><span>20</span></a>
+        <a href="#day10" class="date-btn"><span>21</span></a>
+        <a href="#day11" class="date-btn"><span>22</span></a>
+        <a href="#day12" class="date-btn"><span>23</span></a>
+        <a href="#day13" class="date-btn"><span>24</span></a>
     </div>
 </div>
 
@@ -110,146 +116,274 @@
     <div id="itinerary" class="tab-content active">
         
         <!-- Day 1 -->
-        <section class="day-section" id="d1">
-            <div class="day-meta"><h2>02/12 Thu</h2><div class="weather">☀️ 8°C</div></div>
+        <section class="day-section" id="day1">
+            <div class="day-meta"><h2>02/12 Thu</h2><div class="weather" data-city="Tokyo">載入中...</div></div>
             <div class="card">
                 <div class="card-row">
-                    <div class="info-body"><span class="type-tag" style="background:var(--trans)">MOVE</span><span class="time">14:00 - 18:30</span><div class="title">KHH ➔ NRT GK018 抵達</div><div class="insight">💡 <b>攻略：</b>成田 T3 入境後，沿紅色跑道步行或搭接駁車至 T2 搭車。</div></div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Narita+Airport" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a>
+                    <div class="info-body"><span class="type-tag" style="background:var(--trans)">FLIGHT</span><div class="title">KHH ➔ NRT GK018 (1400-1830)</div><div class="insight">💡 <b>攻略：</b>抵達 T3，沿藍跑道步行 500m 到 T2 搭 Skyliner。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Narita+Airport+Terminal+2" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M21,16L21,14L13,9L13,3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5L10,9L2,14L2,16L10,13.5L10,19L8,20.5L8,22L11.5,21L15,22L15,20.5L13,19L13,13.5L21,16Z"/></svg></a>
                 </div>
-                <!-- 匯入的 Skyliner 時刻表 -->
                 <div class="card-row">
                     <div class="info-body">
-                        <span class="type-tag" style="background:var(--trans)">TRAIN</span>
-                        <div class="title">Skyliner (T2 ➜ 上野) 時刻表</div>
-                        <div class="insight">
-                            <b>19:00 後建議班次：</b>
-                            <table class="train-schedule">
-                                <thead><tr><th>車次編號</th><th>T2發車</th><th>抵達上野</th></tr></thead>
-                                <tbody>
-                                    <tr><td>Skyliner 164</td><td class="highlight-time">19:03</td><td>19:46</td></tr>
-                                    <tr><td>Skyliner 66</td><td class="highlight-time">19:23</td><td>20:07</td></tr>
-                                    <tr><td>Skyliner 168</td><td class="highlight-time">19:43</td><td>20:25</td></tr>
-                                    <tr><td>Skyliner 70</td><td class="highlight-time">20:03</td><td>20:46</td></tr>
-                                    <tr><td>Skyliner 172</td><td class="highlight-time">20:33</td><td>21:18</td></tr>
-                                </tbody>
+                        <span class="type-tag" style="background:var(--trans)">TRAIN</span><div class="title">Skyliner 19:00後時刻表</div>
+                        <button class="toggle-btn" onclick="toggleS(this)"><span>點擊展開時刻表</span></button>
+                        <div class="schedule-content">
+                            <table class="train-table">
+                                <tr><td>164次</td><td>19:03發</td><td>19:46到</td></tr>
+                                <tr><td>66次</td><td>19:23發</td><td>20:07到</td></tr>
+                                <tr><td>168次</td><td>19:43發</td><td>20:25到</td></tr>
+                                <tr><td>70次</td><td>20:03發</td><td>20:46到</td></tr>
+                                <tr><td>172次</td><td>20:33發</td><td>21:18到</td></tr>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="card-row">
-                    <div class="info-body"><span class="type-tag" style="background:var(--play)">STAY</span><div class="title">池袋住宿：西池袋 5-24-4</div></div>
-                    <a href="https://www.google.com/maps/dir/?api=1&destination=5-chōme-24-4+Nishiikebukuro" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a>
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">STAY</span><div class="title">東京住宿：池袋西口 5-24-4</div></div>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=5-chōme-24-4+Nishiikebukuro" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/></svg></a>
                 </div>
             </div>
         </section>
 
         <!-- Day 2 -->
-        <section class="day-section" id="d2">
-            <div class="day-meta"><h2>02/13 Fri</h2><div class="weather">☁️ 7°C</div></div>
+        <section class="day-section" id="day2">
+            <div class="day-meta"><h2>02/13 Fri</h2><div class="weather" data-city="Tokyo">載入中...</div></div>
             <div class="card">
                 <div class="card-row">
-                    <div class="info-body"><span class="type-tag" style="background:var(--play)">SHOP</span><div class="title">3COINS 原宿旗艦店 / 寶石廣場</div></div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=3COINS+Harajuku" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a>
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">SHOP</span><div class="title">3COINS 原宿旗艦店</div><div class="insight">🛍️ <b>必買：</b>原宿旗艦店有許多獨家聯名雜貨。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=3COINS+Harajuku" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
                 </div>
                 <div class="card-row">
-                    <div class="info-body"><span class="type-tag" style="background:var(--play)">VIEW</span><div class="title">澀谷 SKY (SHIBUYA SKY)</div><div class="insight">✨ <b>預約：</b>請務必提早日落前進場拍照。</div></div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a>
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">VIEW</span><div class="title">澀谷寶石廣場 / 澀谷 SKY</div><div class="insight">✨ <b>必看：</b>需要預約，日落前場次景觀最佳。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
                 </div>
             </div>
         </section>
 
         <!-- Day 3 -->
-        <section class="day-section" id="d3">
-            <div class="day-meta"><h2>02/14 Sat</h2><div class="weather">☁️ 6°C</div></div>
+        <section class="day-section" id="day3">
+            <div class="day-meta"><h2>02/14 Sat</h2><div class="weather" data-city="Tokyo">載入中...</div></div>
             <div class="card">
                 <div class="card-row">
-                    <div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><span class="time">12:30</span><div class="title">博多風龍 秋葉原2號店</div><div class="insight">🍜 <b>必吃：</b>可免費替玉 (加麵) 兩次！</div></div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=博多風龍+秋葉原2號店" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a>
+                    <div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><span class="time">12:30</span><div class="title">博多風龍 秋葉原2號店</div><div class="insight">🍜 <b>必點：</b>半熟蛋豚骨拉麵。可免費替玉兩次。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=博多風龍+秋葉原2號店" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M11,9H9V2H7V9H5V2H3V9C3,11.12 4.66,12.84 6.75,12.97V22H9.25V12.97C11.34,12.84 13,11.12 13,9V2H11V9M16,6V14H18.5V22H21V2C18.24,2 16,4.24 16,6Z"/></svg></a>
                 </div>
                 <div class="card-row">
-                    <div class="info-body"><span class="type-tag" style="background:var(--play)">PLAY</span><span class="time">14:00</span><div class="title">貓頭鷹咖啡廳 / 櫸坂通夜景</div><div class="insight">📸 <b>必拍：</b>櫸坂通與東京鐵塔合照。</div></div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Roppongi+Keyakizaka" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a>
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">PLAY</span><span class="time">14:00</span><div class="title">貓頭鷹咖啡廳 (Akiba Fukurou)</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Akiba+Fukurou+Owl+Cafe" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">VIEW</span><div class="title">六本木櫸坂通夜景</div><div class="insight">📸 <b>攻略：</b>拍攝東京鐵塔與點燈最佳路口。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Keyakizaka+Dori" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
                 </div>
             </div>
         </section>
 
         <!-- Day 4 -->
-        <section class="day-section" id="d4"><div class="day-meta"><h2>02/15 Sun</h2><div class="weather">🌧️ 5°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--play)">ART</span><span class="time">13:00</span><div class="title">teamLab Borderless (已預約)</div></div><a href="https://www.google.com/maps/search/?api=1&query=teamLab+Borderless+Azabudai" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
+        <section class="day-section" id="day4">
+            <div class="day-meta"><h2>02/15 Sun</h2><div class="weather" data-city="Tokyo">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">ART</span><span class="time">13:00</span><div class="title">teamLab Borderless (已預約)</div><div class="insight">🎨 <b>攻略：</b>位於麻布台之丘，建議預留 3 小時。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=teamLab+Borderless+Azabudai+Hills" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">SHOP</span><div class="title">Azabudai Hills Shopping</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Azabudai+Hills" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+            </div>
+        </section>
 
         <!-- Day 5 -->
-        <section class="day-section" id="d5"><div class="day-meta"><h2>02/16 Mon</h2><div class="weather">☀️ 9°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--play)">SHOP</span><div class="title">銀座巡禮 Uniqlo / Workman</div><div class="insight">👕 <b>必買：</b>Workman 機能外套。</div></div><a href="https://www.google.com/maps/search/?api=1&query=Uniqlo+Ginza" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><div class="title">Mo Mo Paradise 銀座晚餐</div></div><a href="https://www.google.com/maps/search/?api=1&query=Mo+Mo+Paradise+Ginza" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
+        <section class="day-section" id="day5">
+            <div class="day-meta"><h2>02/16 Mon</h2><div class="weather" data-city="Tokyo">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">SHOP</span><div class="title">銀座巡禮 Uniqlo / Workman / Seria</div><div class="insight">🧤 <b>必買：</b>Workman Colors 機能性服飾 CP 值極高。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Uniqlo+Ginza" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><div class="title">晚餐：Mo Mo Paradise 銀座店</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Mo+Mo+Paradise+Ginza" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M11,9H9V2H7V9H5V2H3V9C3,11.12 4.66,12.84 6.75,12.97V22H9.25V12.97C11.34,12.84 13,11.12 13,9V2H11V9M16,6V14H18.5V22H21V2C18.24,2 16,4.24 16,6Z"/></svg></a>
+                </div>
+            </div>
+        </section>
 
         <!-- Day 6 -->
-        <section class="day-section" id="d6"><div class="day-meta"><h2>02/17 Tue</h2><div class="weather">☁️ 8°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--play)">MOVIE</span><span class="time">11:00</span><div class="title">東京哈利波特影城 (預約)</div></div><a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros.+Studio+Tour+Tokyo" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
+        <section class="day-section" id="day6">
+            <div class="day-meta"><h2>02/17 Tue</h2><div class="weather" data-city="Tokyo">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">MOVIE</span><span class="time">11:00</span><div class="title">哈利波特影城 (預約制)</div><div class="insight">🪄 <b>必喝：</b>奶油啤酒 (杯子可帶回家)。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio+Tour+Tokyo" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+            </div>
+        </section>
 
         <!-- Day 7 -->
-        <section class="day-section" id="d7"><div class="day-meta"><h2>02/18 Wed</h2><div class="weather">☀️ 10°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--play)">CULTURE</span><div class="title">淺草寺 / 仲見世通商店街</div></div><a href="https://www.google.com/maps/search/?api=1&query=Senso-ji" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
+        <section class="day-section" id="day7">
+            <div class="day-meta"><h2>02/18 Wed</h2><div class="weather" data-city="Tokyo">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">CULTURE</span><div class="title">淺草寺 / 仲見世通 / 國際通</div><div class="insight">🏮 <b>攻略：</b>淺草絲滑布丁是超人氣伴手禮。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Senso-ji" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+            </div>
+        </section>
 
         <!-- Day 8 -->
-        <section class="day-section" id="d8">
-            <div class="day-meta"><h2>02/19 Thu</h2><div class="weather">☀️ 11°C</div></div>
+        <section class="day-section" id="day8">
+            <div class="day-meta"><h2>02/19 Thu</h2><div class="weather" data-city="Osaka">載入中...</div></div>
             <div class="card">
-                <div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--trans)">MOVE</span><span class="time">13:00</span><div class="title">新幹線 Nozomi 365 ➔ 大阪</div><div class="insight">🍱 <b>必買：</b>東京站「極」便當。</div></div><a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Station" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div>
-                <div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--play)">STAY</span><div class="title">大阪：Tennoji DEEZ 入住</div><div class="insight">🏠 <b>地址：</b>天王寺區東高津町 10-19。</div></div><a href="https://www.google.com/maps/dir/?api=1&destination=〒543-0021+Osaka,+Tennoji+Ward,+Higashikōzuchō,+10−19+ＤＥＥＺ" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div>
-                <div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><div class="title">晚餐：國產燒肉 吃到飽</div></div><a href="https://www.google.com/maps/search/?api=1&query=國產燒肉+大阪" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><span class="time">11:00</span><div class="title">壽司郎 Sushiro (預約)</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Sushiro+Tokyo+Station" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M11,9H9V2H7V9H5V2H3V9C3,11.12 4.66,12.84 6.75,12.97V22H9.25V12.97C11.34,12.84 13,11.12 13,9V2H11V9M16,6V14H18.5V22H21V2C18.24,2 16,4.24 16,6Z"/></svg></a>
+                </div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--trans)">MOVE</span><span class="time">13:00</span><div class="title">Nozomi 365 ➔ 新大阪</div><div class="insight">🚄 <b>必買：</b>東京站限定「極」便當。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Station" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">STAY</span><div class="title">大阪入住：東高津町 10-19 DEEZ</div></div>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=〒543-0021+Osaka,+Tennoji+Ward,+Higashikōzuchō,+10−19+ＤＥＥＺ" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/></svg></a>
+                </div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><div class="title">晚餐：國產燒肉 吃到飽</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Abeno+Lucias+BBQ" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M11,9H9V2H7V9H5V2H3V9C3,11.12 4.66,12.84 6.75,12.97V22H9.25V12.97C11.34,12.84 13,11.12 13,9V2H11V9M16,6V14H18.5V22H21V2C18.24,2 16,4.24 16,6Z"/></svg></a>
+                </div>
             </div>
         </section>
 
         <!-- Day 9 -->
-        <section class="day-section" id="d9"><div class="day-meta"><h2>02/20 Fri</h2><div class="weather">☁️ 9°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--play)">PLAY</span><div class="title">天王寺動物園 / Sports Depo</div></div><a href="https://www.google.com/maps/search/?api=1&query=Tennoji+Zoo" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
+        <section class="day-section" id="day9">
+            <div class="day-meta"><h2>02/20 Fri</h2><div class="weather" data-city="Osaka">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">PLAY</span><div class="title">天王寺動物園 / Sports Depo</div><div class="insight">🦁 <b>攻略：</b>必看北極熊餵食與企鵝散步。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Tennoji+Zoo" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">SHOP</span><div class="title">Workman Plus 天王寺</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Workman+Plus+Tennoji" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+            </div>
+        </section>
 
         <!-- Day 10 -->
-        <section class="day-section" id="d10"><div class="day-meta"><h2>02/21 Sat</h2><div class="weather">☁️ 8°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--play)">PLAY</span><div class="title">枚方公園 (Hirakata Park)</div></div><a href="https://www.google.com/maps/search/?api=1&query=Hirakata+Park" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
+        <section class="day-section" id="day10">
+            <div class="day-meta"><h2>02/21 Sat</h2><div class="weather" data-city="Osaka">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">PLAY</span><div class="title">枚方公園 Hirakata Park 一日遊</div><div class="insight">🎢 <b>攻略：</b>超適合親子與拍照的復古風遊樂園。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Hirakata+Park" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+            </div>
+        </section>
 
         <!-- Day 11 -->
-        <section class="day-section" id="d11"><div class="day-meta"><h2>02/22 Sun</h2><div class="weather">☀️ 10°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><div class="title">奈良一日遊 / 志津香釜飯</div><div class="insight">🦌 <b>必吃：</b>奈良七種釜飯。</div></div><a href="https://www.google.com/maps/search/?api=1&query=志津香+大宮店" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
+        <section class="day-section" id="day11">
+            <div class="day-meta"><h2>02/22 Sun</h2><div class="weather" data-city="Nara">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">PLAY</span><div class="title">奈良一日遊 / 餵鹿</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Nara+Park" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--food)">FOOD</span><div class="title">午餐：志津香釜飯 (大宮店)</div><div class="insight">🍚 <b>必吃：</b>奈良七種釜飯。建議提前預約。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Shizuka+Kamameshi+Omiya" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M11,9H9V2H7V9H5V2H3V9C3,11.12 4.66,12.84 6.75,12.97V22H9.25V12.97C11.34,12.84 13,11.12 13,9V2H11V9M16,6V14H18.5V22H21V2C18.24,2 16,4.24 16,6Z"/></svg></a>
+                </div>
+            </div>
+        </section>
 
         <!-- Day 12 -->
-        <section class="day-section" id="d12"><div class="day-meta"><h2>02/23 Mon</h2><div class="weather">☁️ 9°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--play)">SHOP</span><div class="title">天神橋筋商店街 / 心齋橋</div></div><a href="https://www.google.com/maps/search/?api=1&query=Shinsaibashi" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
+        <section class="day-section" id="day12">
+            <div class="day-meta"><h2>02/23 Mon</h2><div class="weather" data-city="Osaka">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--play)">SHOP</span><div class="title">天神橋筋商店街 / 心齋橋</div><div class="insight">🍥 <b>攻略：</b>日本最長的商店街，藥妝價格競爭激烈。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Shinsaibashi" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg></a>
+                </div>
+            </div>
+        </section>
 
         <!-- Day 13 -->
-        <section class="day-section" id="d13"><div class="day-meta"><h2>02/24 Tue</h2><div class="weather">☀️ 12°C</div></div><div class="card"><div class="card-row"><div class="info-body"><span class="type-tag" style="background:var(--trans)">MOVE</span><span class="time">11:05</span><div class="title">KIX ✈ KHH MM031 歸途</div></div><a href="https://www.google.com/maps/search/?api=1&query=Kansai+Airport" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg></a></div></div></section>
-
+        <section class="day-section" id="day13">
+            <div class="day-meta"><h2>02/24 Tue</h2><div class="weather" data-city="Osaka">載入中...</div></div>
+            <div class="card">
+                <div class="card-row">
+                    <div class="info-body"><span class="type-tag" style="background:var(--trans)">FLIGHT</span><span class="time">11:05</span><div class="title">KIX ✈ KHH MM031 歸途</div><div class="insight">✈️ <b>攻略：</b>提早兩小時搭利木津巴士前往機場。</div></div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Kansai+International+Airport" class="nav-btn"><svg viewBox="0 0 24 24"><path d="M21,16L21,14L13,9L13,3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5L10,9L2,14L2,16L10,13.5L10,19L8,20.5L8,22L11.5,21L15,22L15,20.5L13,19L13,13.5L21,16Z"/></svg></a>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- 工具分頁 -->
     <div id="tools" class="tab-content">
         <div class="tool-box">
-            <div class="tool-h">✈️ 航班資訊</div>
-            <div class="tool-r"><span>去程 (GK018)</span><span>2/12 14:00</span></div>
-            <div class="tool-r"><span>回程 (MM031)</span><span>2/24 11:05</span></div>
-        </div>
-        <div class="tool-box">
             <div class="tool-h">🏨 住宿精確地址</div>
-            <div class="tool-r"><span style="flex-shrink:0;">東京:</span><span style="text-align:right">5-chōme-24-4 Nishiikebukuro</span></div>
-            <div class="tool-r"><span style="flex-shrink:0;">大阪:</span><span style="text-align:right">〒543-0021 東高津町10-19</span></div>
+            <div class="tool-r"><span>東京:</span><span style="text-align:right">5-chōme-24-4 Nishiikebukuro</span></div>
+            <div class="tool-r"><span>大阪:</span><span style="text-align:right">〒543-0021 東高津町10-19</span></div>
         </div>
         <div class="tool-box">
-            <div class="tool-h">💰 預算管理 (TWD)</div>
-            <div class="tool-r"><span>總預算</span><span>$65,000</span></div>
+            <div class="tool-h">💰 旅遊概算 (TWD)</div>
+            <div class="tool-r"><span>機票 (GK/MM)</span><span>$13,500</span></div>
+            <div class="tool-r"><span>住宿預估</span><span>$24,000</span></div>
+            <div class="tool-r"><span>餐費交通預估</span><span>$22,000</span></div>
+            <div class="tool-r" style="font-weight:800; color:var(--navy)"><span>總預算</span><span>$59,500</span></div>
         </div>
         <div class="tool-box">
-            <div class="tool-h">☎️ 緊急聯絡</div>
-            <div class="tool-r"><span>警察局</span><span>110</span></div>
-            <div class="tool-r"><span>代表處</span><span>03-3280-7811</span></div>
+            <div class="tool-h">📞 緊急電話</div>
+            <div class="tool-r"><span>日本警察局</span><span>110</span></div>
+            <div class="tool-r"><span>日本救護車</span><span>119</span></div>
+            <div class="tool-r"><span>駐日台北辦事處</span><span>03-3280-7811</span></div>
         </div>
     </div>
 </div>
 
 <nav class="tab-bar">
-    <a href="javascript:void(0)" class="tab-item active" onclick="switchTab('itinerary', this)">
-        <svg viewBox="0 0 24 24"><path d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.9 20.1,3 19,3H18V1M17,12H12V17H17V12Z"/></svg>
-        <span>行程</span>
-    </a>
-    <a href="javascript:void(0)" class="tab-item" onclick="switchTab('tools', this)">
-        <svg viewBox="0 0 24 24"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>
-        <span>工具</span>
-    </a>
+    <a href="javascript:void(0)" class="tab-item active" onclick="switchT('itinerary', this)"><svg viewBox="0 0 24 24"><path d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.9 20.1,3 19,3H18V1M17,12H12V17H17V12Z"/></svg><span>行程</span></a>
+    <a href="javascript:void(0)" class="tab-item" onclick="switchT('tools', this)"><svg viewBox="0 0 24 24"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg><span>工具</span></a>
 </nav>
 
 <script>
-    function switchTab(tid, el) {
+    const API_KEY = "88ab07bdb1492d90271d2146ba5efe95"; 
+
+    async function updateRealTimeWeather() {
+        const weatherElements = document.querySelectorAll('.weather');
+        const weatherCache = {};
+
+        for (let el of weatherElements) {
+            const city = el.getAttribute('data-city');
+            try {
+                if (!weatherCache[city]) {
+                    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},jp&units=metric&appid=${API_KEY}&lang=zh_tw`);
+                    const data = await response.json();
+                    if (data.cod !== 200) throw new Error();
+                    const temp = Math.round(data.main.temp);
+                    const desc = data.weather[0].description;
+                    const icon = data.weather[0].main;
+                    let emoji = "☁️";
+                    if (icon === "Clear") emoji = "☀️";
+                    if (icon === "Rain") emoji = "🌧️";
+                    if (icon === "Snow") emoji = "❄️";
+                    weatherCache[city] = `${emoji} ${desc} ${temp}°C`;
+                }
+                el.innerHTML = weatherCache[city];
+            } catch (e) {
+                el.innerHTML = "⌛ 尚未生效/驗證";
+            }
+        }
+    }
+
+    function toggleS(btn) {
+        const content = btn.nextElementSibling;
+        const isOpen = content.style.display === 'block';
+        content.style.display = isOpen ? 'none' : 'block';
+        btn.querySelector('span').innerText = isOpen ? '點擊展開時刻表' : '點擊收合時刻表';
+    }
+
+    function switchT(tid, el) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.getElementById(tid).classList.add('active');
         document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
@@ -261,20 +395,21 @@
     window.addEventListener('scroll', () => {
         const sections = document.querySelectorAll('.day-section');
         const scrollPos = window.scrollY + 200;
-        sections.forEach(section => {
-            if (scrollPos >= section.offsetTop && scrollPos < (section.offsetTop + section.offsetHeight)) {
-                const id = section.getAttribute('id');
-                document.querySelectorAll('.date-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.getAttribute('href') === '#' + id) {
-                        btn.classList.add('active');
-                        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        sections.forEach(s => {
+            if (scrollPos >= s.offsetTop && scrollPos < (s.offsetTop + s.offsetHeight)) {
+                const id = s.getAttribute('id');
+                document.querySelectorAll('.date-btn').forEach(b => {
+                    b.classList.remove('active');
+                    if (b.getAttribute('href') === '#' + id) {
+                        b.classList.add('active');
+                        b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
                 });
             }
         });
     });
-</script>
 
+    window.addEventListener('load', updateRealTimeWeather);
+</script>
 </body>
 </html>
