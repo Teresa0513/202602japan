@@ -18,254 +18,278 @@
             --safe-bottom: env(safe-area-inset-bottom);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: -apple-system, system-ui, "Noto Sans TC", sans-serif; scroll-behavior: smooth; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: -apple-system, system-ui, sans-serif; scroll-behavior: smooth; }
         body { background-color: var(--bg); color: var(--navy); margin: 0; padding: 0; overflow-x: hidden; }
 
-        /* --- 頂部導覽 --- */
+        /* --- 頂部導航 --- */
         .app-header {
             position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             z-index: 2000; padding-top: var(--safe-top); border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         .header-top { padding: 15px 20px 5px; text-align: center; }
-        .header-top span { font-size: 0.65rem; letter-spacing: 3px; color: var(--grey); display: block; margin-bottom: 4px; }
-        .header-top h1 { font-size: 1.2rem; margin: 0; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .header-top h1 { font-size: 1.1rem; margin: 0; font-weight: 800; letter-spacing: 2px; }
 
-        .date-slider { display: flex; overflow-x: auto; padding: 10px 15px 15px; gap: 10px; -webkit-overflow-scrolling: touch; }
+        .date-slider { display: flex; overflow-x: auto; padding: 10px 15px 15px; gap: 8px; -webkit-overflow-scrolling: touch; }
         .date-slider::-webkit-scrollbar { display: none; }
         .date-btn {
-            flex: 0 0 auto; min-width: 52px; height: 62px; background: var(--white); 
+            flex: 0 0 auto; min-width: 52px; height: 60px; background: var(--white); 
             border: 1px solid #E6E0D4; border-radius: 12px; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; text-decoration: none; color: var(--grey);
         }
         .date-btn.active { background: var(--navy); color: white; border-color: var(--navy); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .date-btn span:first-child { font-size: 0.6rem; font-weight: 700; }
-        .date-btn span:last-child { font-size: 1.1rem; font-weight: 800; }
+        .date-btn span { font-size: 1.1rem; font-weight: 800; }
 
         /* --- 主內容 --- */
         .main-view { padding: calc(165px + var(--safe-top)) 15px calc(110px + var(--safe-bottom)); max-width: 600px; margin: 0 auto; }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .day-section { margin-bottom: 50px; scroll-margin-top: 180px; }
-        .day-meta { margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; }
-        .day-meta h2 { font-size: 1.5rem; margin: 0; font-weight: 800; }
+        .day-meta { margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; }
+        .day-meta h2 { font-size: 1.4rem; margin: 0; font-weight: 800; }
         .weather { font-size: 0.8rem; background: white; padding: 5px 12px; border-radius: 20px; border: 1px solid #EEE; display: flex; align-items: center; gap: 5px; font-weight: 600; }
 
-        .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 15px; border-left: 5px solid var(--navy); }
-        .category-label { font-size: 0.65rem; font-weight: 800; color: var(--accent); letter-spacing: 1px; display: block; margin-bottom: 8px; text-transform: uppercase; }
-        .card-title { font-size: 1.05rem; font-weight: 700; line-height: 1.5; margin-bottom: 8px; color: var(--navy); }
-        .insight { font-size: 0.88rem; line-height: 1.6; color: #444; background: #FAF9F6; padding: 12px; border-radius: 12px; margin-top: 10px; }
-        .insight b { color: var(--accent); }
+        .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 15px; }
+        .category { font-size: 0.65rem; font-weight: 800; color: var(--accent); letter-spacing: 1px; display: block; margin-bottom: 6px; }
+        .card-title { font-size: 1.05rem; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+        .insight { font-size: 0.85rem; line-height: 1.6; color: #444; background: #FAF9F6; padding: 12px; border-radius: 12px; margin-top: 10px; border-left: 3px solid var(--accent); }
 
-        /* --- 修正版：地圖大字卡 (標註紅點) --- */
-        .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); overflow: hidden; margin-top: 25px; border: 1px solid #EEE; }
+        /* --- 地圖卡片樣式 --- */
+        .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); overflow: hidden; margin-top: 20px; border: 1px solid #EEE; }
         .map-header { padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
-        .map-header-left { display: flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 800; color: #2c3e50; }
-        .map-badge { background: #EEF2F7; color: #4B6A9B; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; font-weight: 700; }
-        
-        .map-container { width: 100%; height: 280px; background: #EEE; }
+        .map-h-left { font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+        .map-badge { background: #EEF2F7; color: #4B6A9B; font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+        .map-container { width: 100%; height: 260px; background: #EEE; }
         .map-container iframe { width: 100%; height: 100%; border: 0; }
+        .map-nav-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 18px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; border-top: 1px solid #F0F0F0; }
 
-        .map-nav-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 20px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; font-size: 1.05rem; border-top: 1px solid #F0F0F0; }
+        /* --- 預訂資訊分頁樣式 --- */
+        .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+        .booking-item { background: white; border: 1px solid #EEE; padding: 25px 10px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .booking-item:active { background: var(--navy); color: white; }
+        
+        .voucher-card { display: none; background: white; border-radius: 24px; padding: 25px; border: 2px solid var(--navy); animation: fadeIn 0.3s ease; }
+        .v-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #F5F5F5; font-size: 0.85rem; }
+        .qr-box { width: 180px; height: 180px; background: #EEE; margin: 20px auto; display: flex; align-items: center; justify-content: center; border: 1px solid #DDD; }
 
-        /* 時刻表展開按鈕 */
-        .toggle-btn { width: 100%; padding: 12px; margin-top: 10px; background: #FFF; border: 1px solid var(--navy); border-radius: 12px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
-        .schedule-box { display: none; margin-top: 10px; padding: 10px; border: 1px dashed #DDD; border-radius: 10px; }
-        .train-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        .train-table td { padding: 8px 0; border-bottom: 1px solid #F0F0F0; }
-
-        /* --- 底部導覽 --- */
-        .tab-bar { position: fixed; bottom: 0; width: 100%; background: white; display: flex; padding: 10px 0 calc(12px + var(--safe-bottom)); border-top: 1px solid #EEE; z-index: 2000; }
-        .tab-item { flex: 1; text-align: center; text-decoration: none; color: var(--grey); font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        /* --- 底部欄 --- */
+        .tab-bar { position: fixed; bottom: 0; width: 100%; background: white; display: flex; padding: 10px 0 calc(10px + var(--safe-bottom)); border-top: 1px solid #EEE; z-index: 2000; }
+        .tab-item { flex: 1; text-align: center; text-decoration: none; color: var(--grey); font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .tab-item.active { color: var(--navy); font-weight: 800; }
-        .tab-item svg { width: 24px; height: 24px; fill: currentColor; }
+        .tab-item svg { width: 24px !important; height: 24px !important; fill: currentColor; }
+
+        /* --- 工具箱 --- */
+        .tool-box { background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; }
+        .tool-r { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #EEE; font-size: 0.9rem; }
+        
+        /* 時刻表 */
+        .toggle-btn { width: 100%; padding: 12px; margin-top: 10px; background: #FFF; border: 1px solid var(--navy); border-radius: 12px; font-size: 0.85rem; font-weight: 700; }
+        .schedule-box { display: none; margin-top: 10px; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-<div class="app-header">
-    <div class="header-top">
-        <span>FAMILY TRIP</span>
-        <h1>東京大阪旅行 2026</h1>
-    </div>
+<div class="app-header" id="appH">
+    <div class="header-top"><h1>2026 JP JOURNEY</h1></div>
     <div class="date-slider" id="dateS">
-        <a href="#day1" class="date-btn active"><span>THU</span><span>12</span></a>
-        <a href="#day2" class="date-btn"><span>FRI</span><span>13</span></a>
-        <a href="#day3" class="date-btn"><span>SAT</span><span>14</span></a>
-        <a href="#day4" class="date-btn"><span>SUN</span><span>15</span></a>
-        <a href="#day5" class="date-btn"><span>MON</span><span>16</span></a>
-        <a href="#day6" class="date-btn"><span>TUE</span><span>17</span></a>
-        <a href="#day7" class="date-btn"><span>WED</span><span>18</span></a>
-        <a href="#day8" class="date-btn"><span>THU</span><span>19</span></a>
-        <a href="#day9" class="date-btn"><span>FRI</span><span>20</span></a>
-        <a href="#day10" class="date-btn"><span>SAT</span><span>21</span></a>
-        <a href="#day11" class="date-btn"><span>SUN</span><span>22</span></a>
-        <a href="#day12" class="date-btn"><span>MON</span><span>23</span></a>
-        <a href="#day13" class="date-btn"><span>TUE</span><span>24</span></a>
+        <a href="#day1" class="date-btn active"><span>12</span></a>
+        <a href="#day2" class="date-btn"><span>13</span></a>
+        <a href="#day3" class="date-btn"><span>14</span></a>
+        <a href="#day4" class="date-btn"><span>15</span></a>
+        <a href="#day5" class="date-btn"><span>16</span></a>
+        <a href="#day6" class="date-btn"><span>17</span></a>
+        <a href="#day7" class="date-btn"><span>18</span></a>
+        <a href="#day8" class="date-btn"><span>19</span></a>
+        <a href="#day9" class="date-btn"><span>20</span></a>
+        <a href="#day10" class="date-btn"><span>21</span></a>
+        <a href="#day11" class="date-btn"><span>22</span></a>
+        <a href="#day12" class="date-btn"><span>23</span></a>
+        <a href="#day13" class="date-btn"><span>24</span></a>
     </div>
 </div>
 
 <div class="main-view">
+    
+    <!-- 1. 行程分頁 (13天全數手打補齊) -->
     <div id="itinerary" class="tab-content active">
-        
         <!-- Day 1 -->
         <section class="day-section" id="day1">
-            <div class="day-meta"><h2>02/12 Thu</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
+            <div class="day-meta"><h2>02/12 Thu</h2><div class="weather" data-city="Tokyo">⏳ 取得中</div></div>
             <div class="card">
-                <span class="category-label">Flight & Move</span>
-                <div class="card-title">14:00 KHH ✈ NRT GK018 抵達</div>
-                <div class="insight">💡 <b>攻略：</b>入境 T3 後沿藍跑道步行 500m 到 T2 搭 Skyliner。</div>
-                <button class="toggle-btn" onclick="toggleS(this)"><span>點擊展開 Skyliner 時刻表</span></button>
+                <span class="category">FLIGHT & MOVE</span>
+                <div class="card-title">KHH ➔ NRT GK018 (14:00-18:30)</div>
+                <button class="toggle-btn" onclick="toggleS(this)">展開 Skyliner 班次</button>
                 <div class="schedule-box">
-                    <table class="train-table">
+                    <table style="width:100%">
                         <tr><td>164次</td><td>19:03發</td><td>19:46到</td></tr>
                         <tr><td>66次</td><td>19:23發</td><td>20:07到</td></tr>
-                        <tr><td>168次</td><td>19:43發</td><td>20:25到</td></tr>
                     </table>
                 </div>
             </div>
             <div class="map-card">
-                <div class="map-header"><div class="map-header-left">📍 池袋住宿標記</div><div class="map-badge">停留點: 1</div></div>
-                <div class="map-container">
-                    <!-- 使用座標搜尋模式強制打點 -->
-                    <iframe src="https://maps.google.com/maps?q=35.731032,139.700140&z=16&output=embed"></iframe>
-                </div>
+                <div class="map-header"><div class="map-h-left">📍 池袋住宿標記</div></div>
+                <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.731032,139.700140&z=16&output=embed"></iframe></div>
                 <a href="https://www.google.com/maps/dir/?api=1&destination=35.731032,139.700140" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
             </div>
         </section>
 
         <!-- Day 2 -->
         <section class="day-section" id="day2">
-            <div class="day-meta"><h2>02/13 Fri</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
+            <div class="day-meta"><h2>02/13 Fri</h2><div class="weather" data-city="Tokyo">⏳ 取得中</div></div>
             <div class="card">
-                <span class="category-label">Shop & View</span>
+                <span class="category">SHOP & VIEW</span>
                 <div class="card-title">3COINS 原宿旗艦店 / 澀谷 SKY</div>
-                <div class="insight">✨ <b>必看：</b>澀谷 SKY 預約日落場次最推。</div>
+                <div class="insight">✨ <b>預約：</b>澀谷 SKY 需按預約時間進場。</div>
             </div>
-            <div class="map-card">
-                <div class="map-header"><div class="map-header-left">📍 澀谷站周邊</div></div>
-                <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.658487,139.701334&z=15&output=embed"></iframe></div>
-                <a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
-            </div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.658487,139.701334&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 3 -->
         <section class="day-section" id="day3">
-            <div class="day-meta"><h2>02/14 Sat</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
+            <div class="day-meta"><h2>02/14 Sat</h2><div class="weather" data-city="Tokyo">⏳ 取得中</div></div>
             <div class="card">
-                <span class="category-label">Food & Play</span>
-                <div class="card-title">12:30 博多風龍 / 14:00 貓頭鷹咖啡</div>
-                <div class="card-title">六本木櫸坂通夜景</div>
+                <span class="category">FOOD & PLAY</span>
+                <div class="card-title">博多風龍 秋葉原 / 貓頭鷹咖啡 / 櫸坂通夜景</div>
             </div>
-            <div class="map-card">
-                <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.659972,139.730303&z=15&output=embed"></iframe></div>
-                <a href="https://www.google.com/maps/search/?api=1&query=Roppongi+Keyakizaka" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
-            </div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.659972,139.730303&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Roppongi+Keyakizaka" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 4 -->
         <section class="day-section" id="day4">
-            <div class="day-meta"><h2>02/15 Sun</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Art</span><div class="card-title">13:00 teamLab Borderless (已預約)</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6632,139.7424&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=teamLab+Borderless" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="day-meta"><h2>02/15 Sun</h2><div class="weather" data-city="Tokyo">⏳ 取得中</div></div>
+            <div class="card">
+                <span class="category">ART</span>
+                <div class="card-title">13:00 teamLab Borderless (麻布台)</div>
+            </div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6632,139.7424&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Azabudai+Hills" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 5 -->
         <section class="day-section" id="day5">
-            <div class="day-meta"><h2>02/16 Mon</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Shop</span><div class="card-title">銀座巡禮 Uniqlo / Workman / Seria</div><div class="card-title">晚餐：Mo Mo Paradise 銀座店</div></div>
+            <div class="day-meta"><h2>02/16 Mon</h2><div class="weather" data-city="Tokyo">⏳ 取得中</div></div>
+            <div class="card">
+                <span class="category">SHOP & FOOD</span>
+                <div class="card-title">銀座 Uniqlo / Workman / Mo Mo Paradise</div>
+            </div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6710,139.7650&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Uniqlo+Ginza" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 6 -->
         <section class="day-section" id="day6">
-            <div class="day-meta"><h2>02/17 Tue</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Theme Park</span><div class="card-title">11:00 哈利波特影城 (預約制)</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7441,139.6152&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio+Tour+Tokyo" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="day-meta"><h2>02/17 Tue</h2><div class="weather" data-city="Tokyo">⏳ 取得中</div></div>
+            <div class="card">
+                <span class="category">THEME PARK</span>
+                <div class="card-title">11:00 哈利波特影城 (預約制)</div>
+            </div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7441,139.6152&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio+Tour" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 7 -->
         <section class="day-section" id="day7">
-            <div class="day-meta"><h2>02/18 Wed</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Culture</span><div class="card-title">淺草寺 / 仲見世通 / 國際通</div></div>
+            <div class="day-meta"><h2>02/18 Wed</h2><div class="weather" data-city="Tokyo">⏳ 取得中</div></div>
+            <div class="card">
+                <span class="category">CULTURE</span>
+                <div class="card-title">淺草寺 / 仲見世通</div>
+            </div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7148,139.7967&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Senso-ji" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 8 -->
         <section class="day-section" id="day8">
-            <div class="day-meta"><h2>02/19 Thu</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
+            <div class="day-meta"><h2>02/19 Thu</h2><div class="weather" data-city="Osaka">⏳ 取得中</div></div>
             <div class="card">
-                <span class="category-label">Move & Stay</span>
-                <div class="card-title">13:00 Nozomi 365 ➔ 大阪</div>
-                <div class="card-title">16:00 入住大阪 DEEZ 天王寺</div>
-                <div class="insight">🍱 <b>午餐：</b>11:00 預約壽司郎八重洲店。</div>
+                <span class="category">MOVE & STAY</span>
+                <div class="card-title">Nozomi 365 ➔ 大阪 DEEZ 天王寺</div>
             </div>
             <div class="map-card">
-                <div class="map-header"><div class="map-header-left">📍 大阪住宿標記</div><div class="map-badge">停留點: 1</div></div>
-                <div class="map-container">
-                    <iframe src="https://maps.google.com/maps?q=34.668341,135.524458&z=16&output=embed"></iframe>
-                </div>
+                <div class="map-header"><div class="map-h-left">📍 大阪住宿標記</div></div>
+                <div class="map-container"><iframe src="https://maps.google.com/maps?q=34.668341,135.524458&z=16&output=embed"></iframe></div>
                 <a href="https://www.google.com/maps/dir/?api=1&destination=34.668341,135.524458" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
             </div>
         </section>
 
         <!-- Day 9 -->
         <section class="day-section" id="day9">
-            <div class="day-meta"><h2>02/20 Fri</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Play & Shop</span><div class="card-title">天王寺動物園 / Sports Depo / Workman Plus</div></div>
+            <div class="day-meta"><h2>02/20 Fri</h2><div class="weather" data-city="Osaka">⏳ 取得中</div></div>
+            <div class="card">
+                <span class="category">PLAY</span>
+                <div class="card-title">天王寺動物園 / Sports Depo</div>
+            </div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6507,135.5137&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Tennoji+Zoo" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 10 -->
         <section class="day-section" id="day10">
-            <div class="day-meta"><h2>02/21 Sat</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Play</span><div class="card-title">枚方公園 (Hirakata Park) 全日遊</div></div>
+            <div class="day-meta"><h2>02/21 Sat</h2><div class="weather" data-city="Osaka">⏳ 取得中</div></div>
+            <div class="card"><span class="category">PLAY</span><div class="card-title">枚方公園 (Hirakata Park)</div></div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.8092,135.6393&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Hirakata+Park" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 11 -->
         <section class="day-section" id="day11">
-            <div class="day-meta"><h2>02/22 Sun</h2><div class="weather" data-city="Nara">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Food & Play</span><div class="card-title">奈良一日遊 / 餵鹿 / 志津香釜飯</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6851,135.8276&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=志津香+大宮店" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="day-meta"><h2>02/22 Sun</h2><div class="weather" data-city="Osaka">⏳ 取得中</div></div>
+            <div class="card"><span class="category">FOOD</span><div class="card-title">奈良一日遊 / 志津香釜飯</div></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6851,135.8276&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=志津香+大宮" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 12 -->
         <section class="day-section" id="day12">
-            <div class="day-meta"><h2>02/23 Mon</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Shop</span><div class="card-title">天神橋筋商店街 / 心齋橋藥妝採買</div></div>
+            <div class="day-meta"><h2>02/23 Mon</h2><div class="weather" data-city="Osaka">⏳ 取得中</div></div>
+            <div class="card"><span class="category">SHOP</span><div class="card-title">天神橋筋商店街 / 心齋橋藥妝</div></div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6710,135.5013&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Shinsaibashi" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 13 -->
         <section class="day-section" id="day13">
-            <div class="day-meta"><h2>02/24 Tue</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Flight</span><div class="card-title">11:05 KIX ✈ KHH MM031 歸途</div></div>
+            <div class="day-meta"><h2>02/24 Tue</h2><div class="weather" data-city="Osaka">⏳ 取得中</div></div>
+            <div class="card"><span class="category">FLIGHT</span><div class="card-title">11:05 KIX ✈ KHH 歸途</div></div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.4347,135.2442&z=13&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Kansai+Airport" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
-
     </div>
 
-    <!-- 工具 -->
+    <!-- 2. 預訂資訊分頁 -->
+    <div id="booking" class="tab-content">
+        <div class="day-meta"><h2>預訂資訊</h2></div>
+        <div class="booking-grid">
+            <div class="booking-item" onclick="showV('t')">Teamlab</div>
+            <div class="booking-item" onclick="showV('h')">哈利波特</div>
+            <div class="booking-item" onclick="showV('z')">天王寺動物園</div>
+            <div class="booking-item" onclick="showV('p')">枚方公園</div>
+        </div>
+
+        <div id="v-t" class="voucher-card">
+            <h3 style="text-align:center; color:#FF5722;">Klook 電子憑證</h3>
+            <div class="qr-box"><svg width="100" height="100" viewBox="0 0 24 24"><path d="M3,11H5V9H3M3,5H5V3H3M7,11H9V9H7M7,5H9V3H7M15,21H17V19H15M3,21H5V19H3M7,21H9V19H7M11,21H13V19H11M11,17H13V15H11M17,13H19V11H17M13,13H15V11H13M13,17H15V15H13M15,13H17V11H15M17,17H19V15H17M13,5H15V3H13M13,9H15V7H13M15,9H17V7H15M17,9H19V7H17M17,5H19V3H17M21,11H23V9H21M21,15H23V13H21M21,19H23V17H21M21,23H23V21H21M21,7H23V5H21M21,3H23V1H21M1,23H3V21H1M5,23H7V21H5M9,23H11V21H9M13,23H15V21H13M17,23H19V21H17M1,3V9H9V3M7,7H3V5H7M1,15V21H9V15M7,19H3V17H7M15,3V9H23V3M21,7H17V5H21Z"/></svg></div>
+            <div class="v-row"><span>預訂人</span><span>WANG CHIEN PING</span></div>
+            <div class="v-row"><span>參觀日期</span><span>2026/02/15 13:00</span></div>
+            <div class="v-row"><span>訂單號碼</span><span>JSG287902</span></div>
+        </div>
+        <div id="v-h" class="voucher-card" style="text-align:center; padding:40px;">尚未匯入資料</div>
+        <div id="v-z" class="voucher-card" style="text-align:center; padding:40px;">現場購票</div>
+        <div id="v-p" class="voucher-card" style="text-align:center; padding:40px;">尚未匯入資料</div>
+    </div>
+
+    <!-- 3. 工具分頁 -->
     <div id="tools" class="tab-content">
         <div class="tool-box">
-            <div class="tool-h">🏨 住宿地址備忘</div>
-            <div class="tool-r"><span>東京</span><span>5-chōme-24-4 Nishiikebukuro</span></div>
-            <div class="tool-r"><span>大阪</span><span>〒543-0021 東高津町10-19</span></div>
+            <div class="tool-h">🏨 住宿備忘</div>
+            <div class="tool-r"><span>東京池袋</span><span>5-chōme-24-4 Nishiikebukuro</span></div>
+            <div class="tool-r"><span>大阪天王寺</span><span>〒543-0021 東高津町10-19</span></div>
         </div>
     </div>
 </div>
 
 <nav class="tab-bar">
     <a href="javascript:void(0)" class="tab-item active" onclick="switchT('itinerary', this)"><svg viewBox="0 0 24 24"><path d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.9 20.1,3 19,3H18V1M17,12H12V17H17V12Z"/></svg><span>行程</span></a>
+    <a href="javascript:void(0)" class="tab-item" onclick="switchT('booking', this)"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M15.5,13.5L11,18L8.5,15.5L9.91,14.09L11,15.17L14.09,12.08L15.5,13.5Z"/></svg><span>預訂</span></a>
     <a href="javascript:void(0)" class="tab-item" onclick="switchT('tools', this)"><svg viewBox="0 0 24 24"><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg><span>工具</span></a>
 </nav>
 
 <script>
     const API_KEY = "88ab07bdb1492d90271d2146ba5efe95"; 
-
-    async function updateWeather() {
+    async function updateW() {
         const els = document.querySelectorAll('.weather');
         const cache = {};
         for (let el of els) {
@@ -274,29 +298,30 @@
                 if (!cache[city]) {
                     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},jp&units=metric&appid=${API_KEY}&lang=zh_tw`);
                     const data = await res.json();
-                    const icon = data.weather[0].main === "Clear" ? "☀️" : data.weather[0].main === "Rain" ? "🌧️" : "☁️";
-                    cache[city] = `${icon} ${data.weather[0].description} ${Math.round(data.main.temp)}°C`;
+                    cache[city] = `${data.weather[0].main === "Clear" ? "☀️" : "☁️"} ${Math.round(data.main.temp)}°C`;
                 }
                 el.innerHTML = cache[city];
-            } catch (e) { el.innerHTML = "⌛ 天氣待生效"; }
+            } catch (e) { el.innerHTML = "⌛ 等待驗證"; }
         }
     }
-
     function toggleS(btn) {
-        const box = btn.nextElementSibling;
-        const open = box.style.display === 'block';
-        box.style.display = open ? 'none' : 'block';
-        btn.querySelector('span').innerText = open ? '點擊展開時刻表' : '點擊收合時刻表';
+        const b = btn.nextElementSibling;
+        const open = b.style.display === 'block';
+        b.style.display = open ? 'none' : 'block';
+        btn.innerText = open ? '展開 Skyliner 班次' : '收合班次表';
     }
-
+    function showV(id) {
+        document.querySelectorAll('.voucher-card').forEach(v => v.style.display = 'none');
+        document.getElementById('v-' + id).style.display = 'block';
+    }
     function switchT(tid, el) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.getElementById(tid).classList.add('active');
         document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
+        document.getElementById('appH').style.display = (tid === 'itinerary') ? 'block' : 'none';
         window.scrollTo(0,0);
     }
-
     window.addEventListener('scroll', () => {
         const sections = document.querySelectorAll('.day-section');
         const scrollPos = window.scrollY + 200;
@@ -312,8 +337,7 @@
             }
         });
     });
-
-    window.addEventListener('load', updateWeather);
+    window.addEventListener('load', updateW);
 </script>
 </body>
 </html>
