@@ -3,97 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
-    <!-- PWA 沉浸式設定：確保加入主畫面後網址列消失 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="2026日本行">
-    <link rel="apple-touch-icon" href="images/app_icon.png"> <!-- 若有圖示可放此 -->
-
     <title>2026 JAPAN TRAVEL</title>
     <style>
         :root {
             --bg: #FAF9F6; --navy: #1A2A3A; --grey: #8E8E93; --accent: #E67E22;
-            --white: #FFFFFF; --map-blue: #4169E1; --safe-top: env(safe-area-inset-top); --safe-bottom: env(safe-area-inset-bottom);
+            --white: #FFFFFF; --map-blue: #4169E1; --lunar-red: #D32F2F;
+            --safe-top: env(safe-area-inset-top); --safe-bottom: env(safe-area-inset-bottom);
         }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: -apple-system, "Noto Sans TC", sans-serif; }
-        
-        html, body { 
-            background-color: var(--bg); color: var(--navy); margin: 0; padding: 0; 
-            /* 防止頁面在邊界產生不穩定的滑動回彈感 */
-            overscroll-behavior-y: none; 
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: -apple-system, "Noto Sans TC", sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg); color: var(--navy); margin: 0; padding: 0; overflow-x: hidden; }
 
-        /* --- 頂部 UI (極致壓縮版) --- */
-        .app-header { 
-            position: fixed; top: 0; width: 100%; 
-            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px); 
-            z-index: 2000; padding-top: var(--safe-top); border-bottom: 1px solid rgba(0,0,0,0.05); 
-        }
-        .header-top { padding: 8px 20px 2px; text-align: center; }
-        .header-top h1 { font-size: 0.95rem; margin: 0; font-weight: 800; letter-spacing: 1px; color: var(--navy); }
-        
-        .date-slider { display: flex; overflow-x: auto; padding: 8px 15px; gap: 8px; -webkit-overflow-scrolling: touch; }
+        /* --- 頂部 UI --- */
+        .app-header { position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); z-index: 2000; padding-top: var(--safe-top); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .header-top { padding: 10px 20px 2px; text-align: center; }
+        .header-top h1 { font-size: 1rem; margin: 0; font-weight: 800; letter-spacing: 1px; }
+        .date-slider { display: flex; overflow-x: auto; padding: 10px 15px; gap: 8px; -webkit-overflow-scrolling: touch; }
         .date-slider::-webkit-scrollbar { display: none; }
-        
-        .date-btn { flex: 0 0 auto; min-width: 52px; height: 60px; background: var(--white); border: 1px solid #E6E0D4; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-decoration: none; color: var(--grey); }
-        .date-btn.active { background: var(--navy); color: white; border-color: var(--navy); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .date-btn .feb-tag { font-size: 0.5rem; font-weight: 700; margin-bottom: 1px; text-transform: uppercase; }
-        .date-btn .day-num { font-size: 1.05rem; font-weight: 800; }
-        .date-btn .lunar-tag { font-size: 0.5rem; font-weight: bold; margin-top: 1px; color: #d32f2f; }
+        .date-btn { flex: 0 0 auto; min-width: 55px; height: 65px; background: var(--white); border: 1px solid #E6E0D4; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-decoration: none; color: var(--grey); }
+        .date-btn.active { background: var(--navy); color: white; border-color: var(--navy); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .date-btn .feb-tag { font-size: 0.55rem; font-weight: 700; margin-bottom: 1px; }
+        .date-btn .day-num { font-size: 1.1rem; font-weight: 800; }
+        .date-btn .lunar-tag { font-size: 0.55rem; font-weight: bold; margin-top: 1px; color: var(--lunar-red); }
         .date-btn.active .lunar-tag { color: #ffcdd2; }
 
         /* --- 主內容容器 --- */
-        .main-view { padding: calc(115px + var(--safe-top)) 15px calc(100px + var(--safe-bottom)); max-width: 600px; margin: 0 auto; }
+        .main-view { padding: calc(125px + var(--safe-top)) 15px calc(100px + var(--safe-bottom)); max-width: 600px; margin: 0 auto; }
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .day-section { margin-bottom: 45px; scroll-margin-top: 125px; }
-        .day-meta { margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; }
-        .day-meta h2 { font-size: 1.35rem; margin: 0; font-weight: 800; }
-        .weather { font-size: 0.75rem; background: white; padding: 4px 10px; border-radius: 20px; border: 1px solid #EEE; font-weight: 600; }
+        .day-section { margin-bottom: 50px; scroll-margin-top: 135px; }
+        .day-meta { margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; }
+        .day-meta h2 { font-size: 1.4rem; margin: 0; font-weight: 800; }
+        .day-meta h2 .lunar-title { color: var(--lunar-red); font-size: 0.9rem; margin-left: 8px; font-weight: bold; }
+        .weather { font-size: 0.8rem; background: white; padding: 5px 12px; border-radius: 20px; border: 1px solid #EEE; font-weight: 600; }
 
-        /* 行程卡片 */
         .card { background: white; border-radius: 20px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 12px; border-left: 5px solid var(--navy); }
-        .category { font-size: 0.6rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 5px; text-transform: uppercase; }
-        .card-title { font-size: 0.95rem; font-weight: 700; line-height: 1.4; margin-bottom: 5px; }
+        .category { font-size: 0.65rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 6px; text-transform: uppercase; }
+        .card-title { font-size: 1rem; font-weight: 700; line-height: 1.5; margin-bottom: 5px; }
         .booking-link { color: var(--map-blue); text-decoration: underline; cursor: pointer; font-weight: 800; }
-        .insight { font-size: 0.8rem; line-height: 1.5; color: #444; background: #FAF9F6; padding: 10px; border-radius: 10px; margin-top: 8px; border-left: 3px solid var(--accent); }
+        .insight { font-size: 0.85rem; line-height: 1.6; color: #444; background: #FAF9F6; padding: 10px; border-radius: 12px; margin-top: 8px; border-left: 3px solid var(--accent); }
 
-        /* 地圖大字卡 */
-        .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); overflow: hidden; margin-top: 15px; border: 1px solid #EEE; }
-        .map-container { width: 100%; height: 230px; background: #EEE; }
+        .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); overflow: hidden; margin-top: 15px; border: 1px solid #EEE; }
+        .map-container { width: 100%; height: 240px; background: #EEE; }
         .map-container iframe { width: 100%; height: 100%; border: 0; }
-        .map-nav-btn { display: flex; align-items: center; justify-content: center; padding: 16px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; border-top: 1px solid #F0F0F0; font-size: 0.95rem; }
+        .map-nav-btn { display: flex; align-items: center; justify-content: center; padding: 18px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; border-top: 1px solid #F0F0F0; }
 
         /* --- 預訂分頁 --- */
-        .shinkansen-btn { background: var(--navy); color: white; padding: 18px; border-radius: 12px; text-align: center; font-weight: 800; margin-bottom: 15px; font-size: 1rem; }
-        .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .booking-item { background: white; border: 1px solid #EEE; padding: 18px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 0.85rem; }
-        
-        .voucher-card { display: none; background: white; border-radius: 24px; padding: 20px; border: 2px solid var(--navy); animation: fadeIn 0.3s ease; }
-        .v-main-name { font-size: 1.3rem; font-weight: 900; text-align: center; color: var(--navy); margin-bottom: 5px; }
-        .v-sub-name { font-size: 0.85rem; font-weight: bold; text-align: center; color: var(--accent); margin-bottom: 12px; border-bottom: 1px dashed #EEE; padding-bottom: 8px; }
-        .qr-box { width: 210px; height: 210px; margin: 0 auto 15px; border: 2px solid #EEE; padding: 8px; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
+        .shinkansen-btn { background: var(--navy); color: white; padding: 20px; border-radius: 15px; text-align: center; font-weight: 800; margin-bottom: 15px; }
+        .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+        .booking-item { background: white; border: 1px solid #EEE; padding: 18px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 0.9rem; }
+        .voucher-card { display: none; background: white; border-radius: 24px; padding: 25px; border: 2px solid var(--navy); animation: fadeIn 0.3s ease; }
+        .qr-box { width: 220px; height: 220px; margin: 0 auto 20px; border: 2px solid #EEE; padding: 10px; border-radius: 10px; }
         .qr-box img { width: 100%; height: 100%; object-fit: contain; }
-        .v-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #F5F5F5; font-size: 0.8rem; }
-        .back-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 800; color: var(--navy); margin-bottom: 12px; background: #EEE; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
+        .v-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #F5F5F5; font-size: 0.85rem; }
+        .back-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; font-weight: 800; color: var(--navy); margin-bottom: 15px; background: #EEE; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
 
-        /* 底部欄 */
+        /* --- 底部欄 --- */
         .tab-bar { position: fixed; bottom: 0; width: 100%; background: white; display: flex; padding: 10px 0 calc(10px + var(--safe-bottom)); border-top: 1px solid #EEE; z-index: 2000; }
-        .tab-item { flex: 1; text-align: center; text-decoration: none; color: var(--grey); font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-item { flex: 1; text-align: center; text-decoration: none; color: var(--grey); font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .tab-item.active { color: var(--navy); font-weight: 800; }
-        .tab-item svg { width: 22px; height: 22px; fill: currentColor; }
+        .tab-item svg { width: 24px; height: 24px; fill: currentColor; }
         
-        .toggle-btn { width: 100%; padding: 12px; margin-top: 8px; background: #FFF; border: 1.5px solid var(--navy); border-radius: 10px; font-size: 0.85rem; font-weight: 700; color: var(--navy); }
-        .schedule-box { display: none; margin-top: 10px; }
+        .toggle-btn { width: 100%; padding: 10px; margin-top: 8px; background: #FFF; border: 1.5px solid var(--navy); border-radius: 10px; font-size: 0.85rem; font-weight: 700; }
+        .schedule-box { display: none; margin-top: 8px; }
         .train-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; text-align: center; }
-        .train-table th { background: #F0F0F0; padding: 6px; }
-        .train-table td { padding: 8px 2px; border-bottom: 1px solid #EEE; }
-        .ext-link { display: block; text-align: center; margin-top: 10px; font-size: 0.7rem; color: var(--map-blue); text-decoration: none; font-weight: 800; }
+        .train-table th { background: #F0F0F0; padding: 5px; }
+        .train-table td { padding: 8px 3px; border-bottom: 1px solid #EEE; }
     </style>
 </head>
 <body>
@@ -136,14 +114,14 @@
                         <tr><td>70</td><td>20:04</td><td>20:40</td><td>20:45</td></tr>
                         <tr><td>172</td><td>20:23</td><td>21:07</td><td>21:12</td></tr>
                     </table>
-                    <a href="https://www.keisei.co.jp/keisei/tetudou/skyliner/tc/traffic/skyliner.php?id=1" target="_blank" class="ext-link">🔗 京成電鐵官方時刻表</a>
+                    <a href="https://www.keisei.co.jp/keisei/tetudou/skyliner/tc/traffic/skyliner.php?id=1" target="_blank" style="display:block; text-align:center; margin-top:10px; font-size:0.75rem; color:var(--map-blue); text-decoration:none;">🔗 官方完整時刻表連結</a>
                 </div>
             </div>
-            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.731032,139.700140&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/dir/?api=1&destination=35.7310,139.7001" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.731032,139.700140&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/dir/?api=1&destination=35.7310,139.7001" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
 
         <!-- Day 2-3 -->
-        <section class="day-section" id="day2"><div class="day-meta"><h2>02/13 Fri</h2><div class="weather" data-city="Tokyo">⌛</div></div><div class="card"><div class="card-title">3COINS 原宿旗艦店 / 澀谷寶石廣場 / 澀谷 SKY (需預約)</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6585,139.7013&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
+        <section class="day-section" id="day2"><div class="day-meta"><h2>02/13 Fri</h2><div class="weather" data-city="Tokyo">⌛</div></div><div class="card"><div class="card-title">3COINS 原宿旗艦店 / 澀谷寶石廣場 / 澀谷 SKY</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6585,139.7013&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
         <section class="day-section" id="day3"><div class="day-meta"><h2>02/14 Sat</h2><div class="weather" data-city="Tokyo">⌛</div></div><div class="card"><div class="card-title">12:30 博多風龍 / 14:00 貓頭鷹咖啡 / 櫸坂通夜景</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6599,139.7303&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Roppongi+Keyakizaka" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
 
         <!-- Day 4 (teamLab) -->
@@ -152,47 +130,44 @@
             <div class="card">
                 <span class="category">Art</span>
                 <div class="card-title">13:00 <span class="booking-link" onclick="goToVoucher('t', 'day4')">teamLab Borderless</span> (已預約)</div>
-                <div class="insight">📍 麻布台之丘 Garden Plaza B B1。點擊文字查看預約憑證。</div>
             </div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6632,139.7424&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Azabudai+Hills" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
 
         <!-- Day 5 (2/16 更新) -->
         <section class="day-section" id="day5">
-            <div class="day-meta"><h2>02/16 Mon</h2><div class="weather" data-city="Tokyo">⌛</div></div>
+            <div class="day-meta"><h2>02/16 Mon <span class="lunar-title">除夕</span></h2><div class="weather" data-city="Tokyo">⌛</div></div>
             <div class="card">
                 <span class="category">Shopping & Food</span>
                 <div class="card-title">On 東京銀座旗艦店 / Workman Colors</div>
                 <div class="card-title">Seria Exitmelsa 銀座店 / Mo Mo Paradise</div>
-                <div class="insight">🧧 今日農曆除夕，祝旅途順利！</div>
             </div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6710,139.7650&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=On+Ginza" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
 
         <!-- Day 6-7 -->
-        <section class="day-section" id="day6"><div class="day-meta"><h2>02/17 Tue</h2><div class="weather" data-city="Tokyo">⌛</div></div><div class="card"><div class="card-title">11:00 哈利波特影城 (預約制)</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7441,139.6152&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
-        <section class="day-section" id="day7"><div class="day-meta"><h2>02/18 Wed</h2><div class="weather" data-city="Tokyo">⌛</div></div><div class="card"><div class="card-title">淺草寺 / 仲見世通 / 國際通</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7148,139.7967&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Senso-ji" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
+        <section class="day-section" id="day6"><div class="day-meta"><h2>02/17 Tue <span class="lunar-title">初一</span></h2><div class="weather" data-city="Tokyo">⌛</div></div><div class="card"><div class="card-title">11:00 哈利波特影城 (預約制)</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7441,139.6152&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
+        <section class="day-section" id="day7"><div class="day-meta"><h2>02/18 Wed <span class="lunar-title">初二</span></h2><div class="weather" data-city="Tokyo">⌛</div></div><div class="card"><div class="card-title">淺草寺 / 仲見世通 / 國際通</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7148,139.7967&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Senso-ji" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
 
-        <!-- Day 8 (新幹線修正) -->
+        <!-- Day 8 -->
         <section class="day-section" id="day8">
-            <div class="day-meta"><h2>02/19 Thu</h2><div class="weather" data-city="Osaka">⌛</div></div>
+            <div class="day-meta"><h2>02/19 Thu <span class="lunar-title">初三</span></h2><div class="weather" data-city="Osaka">⌛</div></div>
             <div class="card">
                 <span class="category">Move</span>
                 <div class="card-title">10:00 退房 ➔ 11:00 壽司郎 ➔ <span class="booking-link" onclick="goToVoucher('s', 'day8')">NOZOMI 33 (12:30)</span></div>
-                <div class="insight">🚄 新幹線：12:30 東京發 ➔ 15:00 抵達新大阪。</div>
             </div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.668341,135.524458&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/dir/?api=1&destination=34.6683,135.5244" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
 
         <!-- Day 9-13 -->
-        <section class="day-section" id="day9"><div class="day-meta"><h2>02/20 Fri</h2><div class="weather" data-city="Osaka">⌛</div></div><div class="card"><div class="card-title">天王寺動物園 / Sports Depo / Workman Plus</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6507,135.5137&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Tennoji+Zoo" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
-        <section class="day-section" id="day10"><div class="day-meta"><h2>02/21 Sat</h2><div class="weather" data-city="Osaka">⌛</div></div><div class="card"><div class="card-title">枚方公園 (Hirakata Park) 全日遊</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.8092,135.6393&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Hirakata+Park" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
-        <section class="day-section" id="day11"><div class="day-meta"><h2>02/22 Sun</h2><div class="weather" data-city="Osaka">⌛</div></div><div class="card"><div class="card-title">奈良一日遊 / 餵鹿 / 志津香釜飯 (大宮店)</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6851,135.8276&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=志津香+大宮" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
+        <section class="day-section" id="day9"><div class="day-meta"><h2>02/20 Fri <span class="lunar-title">初四</span></h2><div class="weather" data-city="Osaka">⌛</div></div><div class="card"><div class="card-title">天王寺動物園 / Sports Depo / Workman Plus</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6507,135.5137&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Tennoji+Zoo" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
+        <section class="day-section" id="day10"><div class="day-meta"><h2>02/21 Sat <span class="lunar-title">初五</span></h2><div class="weather" data-city="Osaka">⌛</div></div><div class="card"><div class="card-title">枚方公園 (Hirakata Park) 全日遊</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.8092,135.6393&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Hirakata+Park" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
+        <section class="day-section" id="day11"><div class="day-meta"><h2>02/22 Sun</h2><div class="weather" data-city="Osaka">⌛</div></div><div class="card"><div class="card-title">奈良一日遊 / 餵鹿 / 志津香釜飯</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6851,135.8276&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=志津香+大宮" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
         <section class="day-section" id="day12"><div class="day-meta"><h2>02/23 Mon</h2><div class="weather" data-city="Osaka">⌛</div></div><div class="card"><div class="card-title">天神橋筋商店街 / 心齋橋藥妝採買</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6710,135.5013&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Shinsaibashi" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
         <section class="day-section" id="day13"><div class="day-meta"><h2>02/24 Tue</h2><div class="weather" data-city="Osaka">⌛</div></div><div class="card"><span class="category">Flight</span><div class="card-title">11:05 KIX ✈ KHH MM031 歸途</div></div><div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.4347,135.2442&z=13&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Kansai+Airport" target="_blank" class="map-nav-btn">開啟導航</a></div></section>
     </div>
 
-    <!-- 預訂資訊分頁 -->
+    <!-- 預訂資訊頁 -->
     <div id="booking" class="tab-content">
         <div class="day-meta"><h2>預訂資訊</h2></div>
         <div class="shinkansen-btn" onclick="showV('s')">🚄 新幹線：東京 ➔ 新大阪 (12:30)</div>
@@ -229,7 +204,7 @@
 
     <!-- 工具 -->
     <div id="tools" class="tab-content">
-        <div class="tool-box"><div class="tool-h">🏨 住宿</div><div class="tool-r"><span>東京</span><span>5-chōme-24-4 Nishiikebukuro</span></div><div class="tool-r"><span>大阪</span><span>〒543-0021 東高津町10-19</span></div></div>
+        <div class="tool-box"><div class="tool-h">🏨 住宿備忘</div><div class="tool-r"><span>東京池袋</span><span>5-chōme-24-4 Nishiikebukuro</span></div><div class="tool-r"><span>大阪天王寺</span><span>〒543-0021 東高津町10-19</span></div></div>
         <div class="tool-box"><div class="tool-h">📞 緊急聯絡</div><div class="tool-r"><span>台北駐日代表處</span><span>03-3280-7811</span></div></div>
     </div>
 </div>
