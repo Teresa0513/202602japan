@@ -18,11 +18,15 @@
         .app-header { position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); z-index: 2000; padding-top: var(--safe-top); border-bottom: 1px solid rgba(0,0,0,0.05); }
         .header-top { padding: 15px 20px 5px; text-align: center; }
         .header-top h1 { font-size: 1.1rem; margin: 0; font-weight: 800; letter-spacing: 1px; }
+        
         .date-slider { display: flex; overflow-x: auto; padding: 10px 15px 15px; gap: 10px; -webkit-overflow-scrolling: touch; }
         .date-slider::-webkit-scrollbar { display: none; }
+        
+        /* 恢復 Feb 標籤 */
         .date-btn { flex: 0 0 auto; min-width: 52px; height: 62px; background: var(--white); border: 1px solid #E6E0D4; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-decoration: none; color: var(--grey); }
         .date-btn.active { background: var(--navy); color: white; border-color: var(--navy); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .date-btn span { font-size: 1.1rem; font-weight: 800; }
+        .date-btn .feb-tag { font-size: 0.6rem; font-weight: 700; margin-bottom: 2px; opacity: 0.8; }
+        .date-btn .day-num { font-size: 1.15rem; font-weight: 800; }
 
         /* --- 內容容器 --- */
         .main-view { padding: calc(165px + var(--safe-top)) 15px calc(110px + var(--safe-bottom)); max-width: 600px; margin: 0 auto; }
@@ -30,8 +34,10 @@
         .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* 卡片設計 */
         .day-section { margin-bottom: 50px; scroll-margin-top: 180px; }
-        .day-meta { margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; }
+        .day-meta { margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; }
+        .day-meta h2 { font-size: 1.4rem; margin: 0; font-weight: 800; }
         .weather { font-size: 0.8rem; background: white; padding: 5px 12px; border-radius: 20px; border: 1px solid #EEE; font-weight: 600; }
 
         .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 15px; border-left: 5px solid var(--navy); }
@@ -40,21 +46,26 @@
         .booking-link { color: var(--map-blue); text-decoration: underline; cursor: pointer; font-weight: 800; }
         .insight { font-size: 0.85rem; line-height: 1.6; color: #444; background: #FAF9F6; padding: 12px; border-radius: 12px; margin-top: 10px; border-left: 3px solid var(--accent); }
 
-        /* --- 地圖卡片 --- */
+        /* 地圖大字卡 */
         .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); overflow: hidden; margin-top: 20px; border: 1px solid #EEE; }
         .map-header { padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 800; }
         .map-container { width: 100%; height: 250px; background: #EEE; }
         .map-container iframe { width: 100%; height: 100%; border: 0; }
         .map-nav-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 18px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; border-top: 1px solid #F0F0F0; }
 
-        /* --- 預訂分頁樣式 --- */
+        /* --- 預訂分頁專用樣式 --- */
         .shinkansen-btn { background: var(--navy); color: white; padding: 20px; border-radius: 15px; text-align: center; font-weight: 800; margin-bottom: 15px; }
         .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
         .booking-item { background: white; border: 1px solid #EEE; padding: 20px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 0.9rem; }
         
+        /* 憑證卡片加強版 */
         .voucher-card { display: none; background: white; border-radius: 24px; padding: 25px; border: 2px solid var(--navy); animation: fadeIn 0.3s ease; }
-        .qr-box { width: 220px; height: 220px; margin: 20px auto; border: 1px solid #DDD; display: flex; align-items: center; justify-content: center; background: #f9f9f9; }
+        .voucher-title-main { text-align: center; font-size: 1.4rem; font-weight: 900; color: var(--navy); margin: 0 0 10px; text-transform: uppercase; }
+        .voucher-subtitle { text-align: center; color: #FF5722; font-weight: bold; font-size: 0.9rem; margin-bottom: 20px; border-bottom: 1px dashed #EEE; padding-bottom: 10px; }
+        
+        .qr-box { width: 220px; height: 220px; margin: 10px auto 25px; border: 4px solid #F0F0F0; display: flex; align-items: center; justify-content: center; background: #f9f9f9; padding: 10px; border-radius: 10px; }
         .qr-box img { width: 100%; height: 100%; object-fit: contain; }
+        
         .v-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #F5F5F5; font-size: 0.85rem; }
         .back-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 0.85rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; background: #EEE; padding: 8px 12px; border-radius: 10px; cursor: pointer; }
         .notes-list { font-size: 0.8rem; color: #666; line-height: 1.7; padding-left: 18px; margin-top: 15px; }
@@ -74,19 +85,19 @@
 <div class="app-header" id="appH">
     <div class="header-top"><h1>2026 JAPAN TRAVEL</h1></div>
     <div class="date-slider" id="dateS">
-        <a href="#day1" class="date-btn active"><span>12</span></a>
-        <a href="#day2" class="date-btn"><span>13</span></a>
-        <a href="#day3" class="date-btn"><span>14</span></a>
-        <a href="#day4" class="date-btn"><span>15</span></a>
-        <a href="#day5" class="date-btn"><span>16</span></a>
-        <a href="#day6" class="date-btn"><span>17</span></a>
-        <a href="#day7" class="date-btn"><span>18</span></a>
-        <a href="#day8" class="date-btn"><span>19</span></a>
-        <a href="#day9" class="date-btn"><span>20</span></a>
-        <a href="#day10" class="date-btn"><span>21</span></a>
-        <a href="#day11" class="date-btn"><span>22</span></a>
-        <a href="#day12" class="date-btn"><span>23</span></a>
-        <a href="#day13" class="date-btn"><span>24</span></a>
+        <a href="#day1" class="date-btn active"><span class="feb-tag">Feb</span><span class="day-num">12</span></a>
+        <a href="#day2" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">13</span></a>
+        <a href="#day3" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">14</span></a>
+        <a href="#day4" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">15</span></a>
+        <a href="#day5" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">16</span></a>
+        <a href="#day6" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">17</span></a>
+        <a href="#day7" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">18</span></a>
+        <a href="#day8" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">19</span></a>
+        <a href="#day9" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">20</span></a>
+        <a href="#day10" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">21</span></a>
+        <a href="#day11" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">22</span></a>
+        <a href="#day12" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">23</span></a>
+        <a href="#day13" class="date-btn"><span class="feb-tag">Feb</span><span class="day-num">24</span></a>
     </div>
 </div>
 
@@ -94,8 +105,8 @@
     <div id="itinerary" class="tab-content active">
         <!-- Day 1 -->
         <section class="day-section" id="day1">
-            <div class="day-meta"><h2>02/12 Thu</h2><div class="weather" data-city="Tokyo">⌛ 天氣...</div></div>
-            <div class="card"><span class="category">Flight & Train</span><div class="card-title">KHH-NRT GK018 (14:00-18:30)</div><div class="insight">💡 抵達 T3，沿藍跑道步行 500m 到 T2 搭 Skyliner。</div><button class="toggle-btn" onclick="toggleS(this)">展開 Skyliner 班次</button><div class="schedule-box"><table style="width:100%"><tr><td>164次</td><td>19:03發</td><td>19:46到</td></tr><tr><td>66次</td><td>19:23發</td><td>20:07到</td></tr><tr><td>168次</td><td>19:43發</td><td>20:25到</td></tr></table></div></div>
+            <div class="day-meta"><h2>02/12 Thu</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
+            <div class="card"><span class="category">Flight & Train</span><div class="card-title">KHH-NRT GK018 (14:00-18:30)</div><div class="insight">💡 抵達成田 T3，走藍跑道步行 500m 到 T2 搭 Skyliner 前往池袋。</div><button class="toggle-btn" onclick="toggleS(this)">展開 Skyliner 班次</button><div class="schedule-box"><table style="width:100%"><tr><td>164次</td><td>19:03發</td><td>19:46到</td></tr><tr><td>66次</td><td>19:23發</td><td>20:07到</td></tr><tr><td>168次</td><td>19:43發</td><td>20:25到</td></tr><tr><td>70次</td><td>20:03發</td><td>20:46到</td></tr><tr><td>172次</td><td>20:33發</td><td>21:18到</td></tr></table></div></div>
             <div class="map-card"><div class="map-header">📍 池袋住宿</div><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/dir/?api=1&destination=5-chōme-24-4+Nishiikebukuro" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
@@ -109,17 +120,17 @@
         <!-- Day 3 -->
         <section class="day-section" id="day3">
             <div class="day-meta"><h2>02/14 Sat</h2><div class="weather" data-city="Tokyo">⌛</div></div>
-            <div class="card"><span class="category">Food & Play</span><div class="card-title">12:30 博多風龍 / 14:00 貓頭鷹咖啡 / 櫸坂通夜景</div><div class="insight">🍜 博多風龍可免費替玉兩次。</div></div>
+            <div class="card"><span class="category">Food & Play</span><div class="card-title">12:30 博多風龍 / 14:00 貓頭鷹咖啡廳 / 櫸坂通夜景</div><div class="insight">🍜 博多風龍可免費替玉（加麵）兩次。</div></div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6599,139.7303&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Roppongi+Keyakizaka" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
 
-        <!-- Day 4 -->
+        <!-- Day 4 (teamLab) -->
         <section class="day-section" id="day4">
             <div class="day-meta"><h2>02/15 Sun</h2><div class="weather" data-city="Tokyo">⌛</div></div>
             <div class="card">
                 <span class="category">Art</span>
                 <div class="card-title">13:00 <span class="booking-link" onclick="goToVoucher('t', 'day4')">teamLab Borderless</span> (已預約)</div>
-                <div class="insight">📍 點擊文字查看預約 QR Code 圖片。</div>
+                <div class="insight">📍 位於麻布台之丘 Garden Plaza B B1。點擊標題看憑證。</div>
             </div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6632,139.7424&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Azabudai+Hills" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
@@ -134,7 +145,7 @@
         <!-- Day 6 -->
         <section class="day-section" id="day6">
             <div class="day-meta"><h2>02/17 Tue</h2><div class="weather" data-city="Tokyo">⌛</div></div>
-            <div class="card"><span class="category">Movie</span><div class="card-title">11:00 哈利波特影城 (預約制)</div><div class="insight">🪄 提早抵達入口，需準備電子門票。</div></div>
+            <div class="card"><span class="category">Movie</span><div class="card-title">11:00 哈利波特影城 (預約制)</div><div class="insight">🪄 需提前抵達，展區內有魔法互動體驗。</div></div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7441,139.6152&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
 
@@ -148,7 +159,7 @@
         <!-- Day 8 -->
         <section class="day-section" id="day8">
             <div class="day-meta"><h2>02/19 Thu</h2><div class="weather" data-city="Osaka">⌛</div></div>
-            <div class="card"><span class="category">Move</span><div class="card-title">11:00 壽司郎 ➔ <span class="booking-link" onclick="goToVoucher('s', 'day8')">Nozomi 365 (13:00)</span> ➔ 大阪入住</div><div class="insight">🏨 住宿：DEEZ 天王寺 (東高津町 10-19)。</div></div>
+            <div class="card"><span class="category">Move</span><div class="card-title">10:00 退房 ➔ 11:00 壽司郎 ➔ <span class="booking-link" onclick="goToVoucher('s', 'day8')">Nozomi 365 (13:00)</span> ➔ 大阪</div><div class="insight">🏨 住宿：DEEZ 天王寺 (東高津町 10-19)。</div></div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6683,135.5244&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/dir/?api=1&destination=34.6683,135.5244" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
 
@@ -183,7 +194,7 @@
         <!-- Day 13 -->
         <section class="day-section" id="day13">
             <div class="day-meta"><h2>02/24 Tue</h2><div class="weather" data-city="Osaka">⌛</div></div>
-            <div class="card"><span class="category">Flight</span><div class="card-title">11:05 KIX ✈ KHH MM031 歸途</div><div class="insight">✈️ 提早 2.5 小時搭利木津巴士往機場。</div></div>
+            <div class="card"><span class="category">Flight</span><div class="card-title">11:05 KIX ✈ KHH MM031 歸途</div><div class="insight">✈️ 需提早抵達關西機場 T2。</div></div>
             <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.4347,135.2442&z=13&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Kansai+Airport" target="_blank" class="map-nav-btn">開啟導航</a></div>
         </section>
     </div>
@@ -194,45 +205,47 @@
         <div class="shinkansen-btn" onclick="showV('s')">🚄 新幹線：東京 ➔ 新大阪</div>
         <div class="booking-grid">
             <div class="booking-item" onclick="showV('t')">Teamlab</div>
-            <div class="booking-item">哈利波特</div>
-            <div class="booking-item">天王寺動物園</div>
-            <div class="booking-item">枚方公園</div>
+            <div class="booking-item" onclick="showV('h')">哈利波特</div>
+            <div class="booking-item" onclick="showV('z')">天王寺動物園</div>
+            <div class="booking-item" onclick="showV('p')">枚方公園</div>
         </div>
+        
+        <!-- 新幹線 -->
         <div id="v-s" class="voucher-card">
             <div class="back-btn" onclick="goBackToItinerary('day8')">← 返回行程 (Day 8)</div>
-            <h3 style="text-align:center;">JR 新幹線指定席</h3>
+            <h3 class="voucher-title-main">新幹線 指定席</h3>
             <div class="v-row"><span>日期</span><span>2026/02/19</span></div>
             <div class="v-row"><span>車次</span><span>Nozomi 365 (13:00)</span></div>
         </div>
+
+        <!-- TeamLab -->
         <div id="v-t" class="voucher-card">
             <div class="back-btn" onclick="goBackToItinerary('day4')">← 返回行程 (Day 4)</div>
-            <h3 style="text-align:center; color:#FF5722;">Klook 電子憑證</h3>
-            <!-- 修正圖片路徑 -->
-            <div class="qr-box"><img src="images/teamlab_qr.jpg" alt="QR Code 加載中..."></div>
+            <h3 class="voucher-title-main">TeamLab Borderless</h3>
+            <p class="voucher-subtitle">Klook 電子憑證</p>
+            <div class="qr-box"><img src="images/teamlab_qr.jpg" alt="QR Code"></div>
             <div class="v-row"><span>預訂人</span><span>WANG CHIEN PING</span></div>
             <div class="v-row"><span>日期</span><span>2026/02/15 13:00</span></div>
             <div class="v-row"><span>訂單號</span><span>JSG287902</span></div>
             <div class="voucher-notes">
-                <p><b>📍 交通指南</b></p>
+                <p><b>📍 交通與須知</b></p>
                 <ul class="notes-list">
-                    <li>地址：麻布台之丘 Garden Plaza B B1樓。</li>
-                    <li>地鐵：神谷町站 5 號出口步行 2 分鐘（建議走地下道）。</li>
-                </ul>
-                <p><b>⚠️ 注意事項</b></p>
-                <ul class="notes-list">
-                    <li>進場須知：出場後無法再次進入。</li>
-                    <li>穿著建議：鏡面地板，建議著褲裝以免走光。</li>
+                    <li>地址：麻布台之丘 Garden Plaza B B1。</li>
+                    <li>進場：請按預約時間準時抵達，建議穿褲裝。</li>
                 </ul>
             </div>
         </div>
+        <div id="v-h" class="voucher-card" style="text-align:center; padding:40px;">預留區</div>
+        <div id="v-z" class="voucher-card" style="text-align:center; padding:40px;">現場購票</div>
+        <div id="v-p" class="voucher-card" style="text-align:center; padding:40px;">預留區</div>
     </div>
 
     <!-- 工具 -->
     <div id="tools" class="tab-content">
         <div class="tool-box">
-            <div class="tool-h">🏨 住宿</div>
-            <div class="tool-r"><span>東京</span><span>5-chōme-24-4 Nishiikebukuro</span></div>
-            <div class="tool-r"><span>大阪</span><span>〒543-0021 東高津町10-19</span></div>
+            <div class="tool-h">🏨 住宿備忘</div>
+            <div class="tool-r"><span>東京池袋</span><span>5-chōme-24-4 Nishiikebukuro</span></div>
+            <div class="tool-r"><span>大阪天王寺</span><span>〒543-0021 東高津町10-19</span></div>
         </div>
     </div>
 </div>
@@ -264,7 +277,7 @@
         const b = btn.nextElementSibling;
         const open = b.style.display === 'block';
         b.style.display = open ? 'none' : 'block';
-        btn.innerText = open ? '展開 Skyliner 班次' : '收合時刻表';
+        btn.innerText = open ? '展開 Skyliner 時刻表' : '收合班次表';
     }
     function showV(id) {
         document.querySelectorAll('.voucher-card').forEach(v => v.style.display = 'none');
@@ -280,12 +293,14 @@
         window.scrollTo(0,0);
     }
     function goToVoucher(vId, fromId) {
-        switchT('booking', document.querySelectorAll('.tab-item')[1]);
+        const bookingTabBtn = document.querySelectorAll('.tab-item')[1];
+        switchT('booking', bookingTabBtn);
         showV(vId);
         window.lastDayId = fromId;
     }
     function goBackToItinerary(fallbackId) {
-        switchT('itinerary', document.querySelectorAll('.tab-item')[0]);
+        const itineraryTabBtn = document.querySelectorAll('.tab-item')[0];
+        switchT('itinerary', itineraryTabBtn);
         const tid = window.lastDayId || fallbackId;
         setTimeout(() => {
             const el = document.getElementById(tid);
