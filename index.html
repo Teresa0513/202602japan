@@ -28,7 +28,7 @@
             z-index: 2000; padding-top: var(--safe-top); border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         .header-top { padding: 15px 20px 5px; text-align: center; }
-        .header-top span { font-size: 0.65rem; letter-spacing: 3px; color: var(--grey); font-weight: 500; display: block; margin-bottom: 4px; }
+        .header-top span { font-size: 0.65rem; letter-spacing: 3px; color: var(--grey); display: block; margin-bottom: 4px; }
         .header-top h1 { font-size: 1.2rem; margin: 0; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         .date-slider { display: flex; overflow-x: auto; padding: 10px 15px 15px; gap: 10px; -webkit-overflow-scrolling: touch; }
@@ -42,11 +42,10 @@
         .date-btn span:first-child { font-size: 0.6rem; font-weight: 700; }
         .date-btn span:last-child { font-size: 1.1rem; font-weight: 800; }
 
-        /* --- 主內容容器 --- */
+        /* --- 主內容 --- */
         .main-view { padding: calc(165px + var(--safe-top)) 15px calc(110px + var(--safe-bottom)); max-width: 600px; margin: 0 auto; }
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .tab-content.active { display: block; }
 
         .day-section { margin-bottom: 50px; scroll-margin-top: 180px; }
         .day-meta { margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; padding: 0 5px; }
@@ -59,32 +58,28 @@
         .insight { font-size: 0.88rem; line-height: 1.6; color: #444; background: #FAF9F6; padding: 12px; border-radius: 12px; margin-top: 10px; }
         .insight b { color: var(--accent); }
 
-        /* --- 地圖大字卡 (仿九州風格) --- */
+        /* --- 修正版：地圖大字卡 (標註紅點) --- */
         .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); overflow: hidden; margin-top: 25px; border: 1px solid #EEE; }
-        .map-header { padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+        .map-header { padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
         .map-header-left { display: flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 800; color: #2c3e50; }
         .map-badge { background: #EEF2F7; color: #4B6A9B; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; font-weight: 700; }
         
-        .map-container { width: 100%; height: 250px; background: #EEE; position: relative; }
+        .map-container { width: 100%; height: 280px; background: #EEE; }
         .map-container iframe { width: 100%; height: 100%; border: 0; }
 
         .map-nav-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 20px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; font-size: 1.05rem; border-top: 1px solid #F0F0F0; }
-        .map-nav-btn:active { background: #F9F9F9; }
 
-        /* 時刻表按鈕 */
+        /* 時刻表展開按鈕 */
         .toggle-btn { width: 100%; padding: 12px; margin-top: 10px; background: #FFF; border: 1px solid var(--navy); border-radius: 12px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
         .schedule-box { display: none; margin-top: 10px; padding: 10px; border: 1px dashed #DDD; border-radius: 10px; }
         .train-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         .train-table td { padding: 8px 0; border-bottom: 1px solid #F0F0F0; }
 
-        /* --- 底部欄 --- */
-        .tab-bar { position: fixed; bottom: 0; width: 100%; background: white; display: flex; padding: 12px 0 calc(12px + var(--safe-bottom)); border-top: 1px solid #EEE; z-index: 2000; }
+        /* --- 底部導覽 --- */
+        .tab-bar { position: fixed; bottom: 0; width: 100%; background: white; display: flex; padding: 10px 0 calc(12px + var(--safe-bottom)); border-top: 1px solid #EEE; z-index: 2000; }
         .tab-item { flex: 1; text-align: center; text-decoration: none; color: var(--grey); font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 6px; }
         .tab-item.active { color: var(--navy); font-weight: 800; }
         .tab-item svg { width: 24px; height: 24px; fill: currentColor; }
-
-        .tool-box { background: white; border-radius: 20px; padding: 25px; margin-bottom: 20px; }
-        .tool-h { font-size: 1rem; font-weight: 800; border-bottom: 2px solid var(--bg); padding-bottom: 12px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -116,7 +111,7 @@
         
         <!-- Day 1 -->
         <section class="day-section" id="day1">
-            <div class="day-meta"><h2>02/12 Thu</h2><div class="weather" data-city="Tokyo">⌛ 天氣獲取中</div></div>
+            <div class="day-meta"><h2>02/12 Thu</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
             <div class="card">
                 <span class="category-label">Flight & Move</span>
                 <div class="card-title">14:00 KHH ✈ NRT GK018 抵達</div>
@@ -127,21 +122,16 @@
                         <tr><td>164次</td><td>19:03發</td><td>19:46到</td></tr>
                         <tr><td>66次</td><td>19:23發</td><td>20:07到</td></tr>
                         <tr><td>168次</td><td>19:43發</td><td>20:25到</td></tr>
-                        <tr><td>70次</td><td>20:03發</td><td>20:46到</td></tr>
-                        <tr><td>172次</td><td>20:33發</td><td>21:18到</td></tr>
                     </table>
                 </div>
             </div>
             <div class="map-card">
-                <div class="map-header">
-                    <div class="map-header-left">📍 池袋住宿定位</div>
-                    <div class="map-badge">停留點: 1</div>
-                </div>
+                <div class="map-header"><div class="map-header-left">📍 池袋住宿標記</div><div class="map-badge">停留點: 1</div></div>
                 <div class="map-container">
-                    <!-- 這裡是西池袋 5-24-4 的精確嵌入 -->
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3238.905663738446!2d139.70014027663242!3d35.73100652701198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188d5bb13b94a3%3A0x86e88e285d996160!2zNS1jaMWNbWUtMjQtNCBOaXNoaWlrZWJ1a3Vyb++8jCBUb3NoaW1hIENpdHksIFRva3lvIDE3MS0wMDIx!5e0!3m2!1szh-TW!2sjp!4v1704870000000!5m2!1szh-TW!2sjp"></iframe>
+                    <!-- 使用座標搜尋模式強制打點 -->
+                    <iframe src="https://maps.google.com/maps?q=35.731032,139.700140&z=16&output=embed"></iframe>
                 </div>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=5-chōme-24-4+Nishiikebukuro" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=35.731032,139.700140" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
             </div>
         </section>
 
@@ -151,11 +141,11 @@
             <div class="card">
                 <span class="category-label">Shop & View</span>
                 <div class="card-title">3COINS 原宿旗艦店 / 澀谷 SKY</div>
-                <div class="insight">✨ <b>必看：</b>澀谷 SKY 建議預約日落前一小時進場拍最美照片。</div>
+                <div class="insight">✨ <b>必看：</b>澀谷 SKY 預約日落場次最推。</div>
             </div>
             <div class="map-card">
-                <div class="map-header"><div class="map-header-left">📍 澀谷區域</div></div>
-                <div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.7251786524387!2d139.700057!3d35.658487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188ca0!2zU0hJQlVZQSBTS1k!5e0!3m2!1szh-TW!2sjp"></iframe></div>
+                <div class="map-header"><div class="map-header-left">📍 澀谷站周邊</div></div>
+                <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.658487,139.701334&z=15&output=embed"></iframe></div>
                 <a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
             </div>
         </section>
@@ -165,13 +155,11 @@
             <div class="day-meta"><h2>02/14 Sat</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
             <div class="card">
                 <span class="category-label">Food & Play</span>
-                <div class="card-title">博多風龍 秋葉原2號店 / 貓頭鷹咖啡</div>
+                <div class="card-title">12:30 博多風龍 / 14:00 貓頭鷹咖啡</div>
                 <div class="card-title">六本木櫸坂通夜景</div>
-                <div class="insight">🍜 <b>必吃：</b>博多風龍免費替玉兩次。📸 <b>必拍：</b>櫸坂通東京鐵塔夜景。</div>
             </div>
             <div class="map-card">
-                <div class="map-header"><div class="map-header-left">📍 六本木夜景點</div></div>
-                <div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.050410492837!2d139.730303!3d35.659972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b90!2zUm9wcG9uZ2kgS2V5YWtpemFrYQ!5e0!3m2!1szh-TW!2sjp"></iframe></div>
+                <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.659972,139.730303&z=15&output=embed"></iframe></div>
                 <a href="https://www.google.com/maps/search/?api=1&query=Roppongi+Keyakizaka" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
             </div>
         </section>
@@ -180,32 +168,28 @@
         <section class="day-section" id="day4">
             <div class="day-meta"><h2>02/15 Sun</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
             <div class="card"><span class="category-label">Art</span><div class="card-title">13:00 teamLab Borderless (已預約)</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.050410!2d139.740!3d35.66!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b9!2zQXphYnVkYWkgSGlsbHM!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=teamLab+Borderless" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6632,139.7424&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=teamLab+Borderless" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 5 -->
         <section class="day-section" id="day5">
             <div class="day-meta"><h2>02/16 Mon</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
-            <div class="card">
-                <span class="category-label">Shop & Food</span>
-                <div class="card-title">銀座巡禮 Uniqlo / Workman / Seria</div>
-                <div class="card-title">晚餐：Mo Mo Paradise 銀座店</div>
-            </div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.132!2d139.76!3d35.67!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188be!2zVW5pcWxvIEdpbnph!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Uniqlo+Ginza" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="card"><span class="category-label">Shop</span><div class="card-title">銀座巡禮 Uniqlo / Workman / Seria</div><div class="card-title">晚餐：Mo Mo Paradise 銀座店</div></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.6710,139.7650&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Uniqlo+Ginza" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 6 -->
         <section class="day-section" id="day6">
             <div class="day-meta"><h2>02/17 Tue</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
             <div class="card"><span class="category-label">Theme Park</span><div class="card-title">11:00 哈利波特影城 (預約制)</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3238.8!2d139.61!3d35.74!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ee!2zV2FybmVyIEJyb3MgU3R1ZGlvIFRvdXI!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio+Tour+Tokyo" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7441,139.6152&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio+Tour+Tokyo" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 7 -->
         <section class="day-section" id="day7">
             <div class="day-meta"><h2>02/18 Wed</h2><div class="weather" data-city="Tokyo">⌛ 取得中</div></div>
             <div class="card"><span class="category-label">Culture</span><div class="card-title">淺草寺 / 仲見世通 / 國際通</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.4!2d139.79!3d35.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188e!2zU2Vuc28tanM!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Senso-ji" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7148,139.7967&z=16&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Senso-ji" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 8 -->
@@ -213,16 +197,16 @@
             <div class="day-meta"><h2>02/19 Thu</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
             <div class="card">
                 <span class="category-label">Move & Stay</span>
-                <div class="card-title">11:00 壽司郎 ➔ 13:00 Nozomi 365 ➔ 大阪</div>
+                <div class="card-title">13:00 Nozomi 365 ➔ 大阪</div>
                 <div class="card-title">16:00 入住大阪 DEEZ 天王寺</div>
-                <div class="insight">🏠 <b>大阪地址：</b>〒543-0021 大阪市天王寺区東高津町10-19。</div>
+                <div class="insight">🍱 <b>午餐：</b>11:00 預約壽司郎八重洲店。</div>
             </div>
             <div class="map-card">
-                <div class="map-header"><div class="map-header-left">📍 大阪住宿定位</div><div class="map-badge">停留點: 1</div></div>
+                <div class="map-header"><div class="map-header-left">📍 大阪住宿標記</div><div class="map-badge">停留點: 1</div></div>
                 <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.8!2d135.52!3d34.66!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e!2zREVFWiBBcGFydG1lbnQ!5e0!3m2!1szh-TW!2sjp"></iframe>
+                    <iframe src="https://maps.google.com/maps?q=34.668341,135.524458&z=16&output=embed"></iframe>
                 </div>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=〒543-0021+Osaka,+Tennoji+Ward,+Higashikōzuchō,+10−19+ＤＥＥＺ" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=34.668341,135.524458" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a>
             </div>
         </section>
 
@@ -230,45 +214,45 @@
         <section class="day-section" id="day9">
             <div class="day-meta"><h2>02/20 Fri</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
             <div class="card"><span class="category-label">Play & Shop</span><div class="card-title">天王寺動物園 / Sports Depo / Workman Plus</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.2!2d135.51!3d34.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e!2zVGVubm9qaSBaYm8!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Tennoji+Zoo" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6507,135.5137&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Tennoji+Zoo" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 10 -->
         <section class="day-section" id="day10">
             <div class="day-meta"><h2>02/21 Sat</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
             <div class="card"><span class="category-label">Play</span><div class="card-title">枚方公園 (Hirakata Park) 全日遊</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3276.5!2d135.63!3d34.80!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60011!2zSGlyYWthdGEgUGFyaw!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Hirakata+Park" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.8092,135.6393&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Hirakata+Park" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 11 -->
         <section class="day-section" id="day11">
-            <div class="day-meta"><h2>02/22 Sun</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
+            <div class="day-meta"><h2>02/22 Sun</h2><div class="weather" data-city="Nara">⌛ 取得中</div></div>
             <div class="card"><span class="category-label">Food & Play</span><div class="card-title">奈良一日遊 / 餵鹿 / 志津香釜飯</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.9!2d135.82!3d34.68!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60013!2zTmFyYSBQYXJr!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=志津香+大宮店" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6851,135.8276&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=志津香+大宮店" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 12 -->
         <section class="day-section" id="day12">
             <div class="day-meta"><h2>02/23 Mon</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
-            <div class="card"><span class="category-label">Shop</span><div class="card-title">天神橋筋商店街 / 心齋橋採買</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.2!2d135.50!3d34.67!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e!2zU2hpbnNhaWJhc2hp!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Shinsaibashi" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="card"><span class="category-label">Shop</span><div class="card-title">天神橋筋商店街 / 心齋橋藥妝採買</div></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.6710,135.5013&z=15&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Shinsaibashi" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
         <!-- Day 13 -->
         <section class="day-section" id="day13">
             <div class="day-meta"><h2>02/24 Tue</h2><div class="weather" data-city="Osaka">⌛ 取得中</div></div>
             <div class="card"><span class="category-label">Flight</span><div class="card-title">11:05 KIX ✈ KHH MM031 歸途</div></div>
-            <div class="map-card"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3290.5!2d135.24!3d34.43!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000b!2zS2Fuc2FpIEFpcnBvcnQ!5e0!3m2!1szh-TW!2sjp"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Kansai+Airport" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
+            <div class="map-card"><div class="map-container"><iframe src="https://maps.google.com/maps?q=34.4347,135.2442&z=13&output=embed"></iframe></div><a href="https://www.google.com/maps/search/?api=1&query=Kansai+Airport" target="_blank" class="map-nav-btn">開啟 Google Maps 導航</a></div>
         </section>
 
     </div>
 
-    <!-- 工具分頁 -->
+    <!-- 工具 -->
     <div id="tools" class="tab-content">
         <div class="tool-box">
-            <div class="tool-h">🏠 住宿地址備忘</div>
-            <div class="tool-r"><span>東京：</span><span style="text-align:right">5-chōme-24-4 Nishiikebukuro</span></div>
-            <div class="tool-r"><span>大阪：</span><span style="text-align:right">〒543-0021 東高津町10-19</span></div>
+            <div class="tool-h">🏨 住宿地址備忘</div>
+            <div class="tool-r"><span>東京</span><span>5-chōme-24-4 Nishiikebukuro</span></div>
+            <div class="tool-r"><span>大阪</span><span>〒543-0021 東高津町10-19</span></div>
         </div>
     </div>
 </div>
@@ -282,9 +266,9 @@
     const API_KEY = "88ab07bdb1492d90271d2146ba5efe95"; 
 
     async function updateWeather() {
-        const weatherEls = document.querySelectorAll('.weather');
+        const els = document.querySelectorAll('.weather');
         const cache = {};
-        for (let el of weatherEls) {
+        for (let el of els) {
             const city = el.getAttribute('data-city');
             try {
                 if (!cache[city]) {
@@ -294,7 +278,7 @@
                     cache[city] = `${icon} ${data.weather[0].description} ${Math.round(data.main.temp)}°C`;
                 }
                 el.innerHTML = cache[city];
-            } catch (e) { el.innerHTML = "⌛ 等待天氣生效"; }
+            } catch (e) { el.innerHTML = "⌛ 天氣待生效"; }
         }
     }
 
