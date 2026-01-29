@@ -54,10 +54,11 @@
         .reserved-tag { color: var(--lunar-red); font-size: 0.8rem; margin-left: 5px; }
         .insight { font-size: 0.8rem; line-height: 1.6; color: #444; background: #FAF9F6; padding: 10px; border-radius: 10px; margin-top: 8px; border-left: 3px solid var(--accent); }
 
-        .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); overflow: hidden; margin-top: 15px; border: 1px solid #EEE; margin-bottom: 15px; }
-        .map-container { width: 100%; height: 200px; background: #EEE; }
+        /* 地圖卡片樣式：調整 margin 讓它緊貼上方卡片 */
+        .map-card { background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; margin-top: 5px; border: 1px solid #EEE; margin-bottom: 20px; }
+        .map-container { width: 100%; height: 180px; background: #EEE; } /* 高度稍微調小一點點，避免版面太長 */
         .map-container iframe { width: 100%; height: 100%; border: 0; pointer-events: none; }
-        .map-nav-btn { display: flex; align-items: center; justify-content: center; padding: 14px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; border-top: 1px solid #F0F0F0; font-size: 0.95rem; }
+        .map-nav-btn { display: flex; align-items: center; justify-content: center; padding: 12px; background: #f8f9fa; text-decoration: none; color: var(--map-blue); font-weight: 800; border-top: 1px solid #F0F0F0; font-size: 0.85rem; }
 
         .booking-item { background: white; border: 1px solid #EEE; padding: 18px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 0.85rem; color: var(--navy); transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.03); width: 100%; }
         .booking-item.active-book { background: var(--navy); color: var(--white); border-color: var(--navy); }
@@ -137,10 +138,17 @@
                 <div class="day-meta"><h2>02/13 Fri</h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Shopping" class="day-banner">
                 <div class="transit-time">⬇️ 交通：約 25 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">3COINS 原宿旗艦店 / 寶石廣場</div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (3COINS 原宿)</a>
+                </div>
+
                 <div class="transit-time">⬇️ 交通：約 15 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">澀谷 SKY <span class="reserved-tag">(需預約)</span></div>
                     <div class="insight">🏠 宿：東京都廳第一廳舍32樓附近</div>
@@ -155,14 +163,23 @@
                 <div class="day-meta"><h2>02/14 Sat</h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Roppongi" class="day-banner">
                 <div class="transit-time">⬇️ 交通：約 30 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">12:30 博多風龍 (秋葉原2號店)</div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (博多風龍 秋葉原)</a>
+                </div>
+
                 <div class="transit-time">⬇️ 交通：約 10 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">14:00 貓頭鷹咖啡廳 <span class="reserved-tag">(已預約)</span></div>
                 </div>
+                
                 <div class="transit-time">⬇️ 交通：約 35 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">晚上：六本木櫸坂通夜景</div>
                 </div>
@@ -180,17 +197,23 @@
                     <div class="insight">🥞 早餐：Jonathan's 神谷町店</div>
                 </div>
                 <div class="transit-time">⬇️ 交通：約 10 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">13:00 <span class="booking-link" onclick="handleInternalJump('t', 'day4')">teamLab Borderless</span> <span class="reserved-tag">(已預約)</span></div>
                     <div class="insight">📍 麻布台之丘</div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (麻布台之丘)</a>
+                </div>
+
                 <div class="transit-time">⬇️ 交通：約 15 分鐘</div>
                 <div class="card">
                     <div class="card-title">愛宕神社 / Shopping</div>
                 </div>
                 <div class="map-card">
                     <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
-                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (麻布台之丘)</a>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (愛宕神社)</a>
                 </div>
             </section>
 
@@ -198,18 +221,25 @@
                 <div class="day-meta"><h2>02/16 Mon <span class="lunar-title">除夕</span></h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Ginza" class="day-banner">
                 <div class="transit-time">⬇️ 交通：約 25 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">銀座逛街 / 銀座藝術水族館 (備案)</div>
                     <div class="insight">On 東京 / Workman Colors</div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (銀座四丁目)</a>
+                </div>
+
                 <div class="transit-time">⬇️ 交通：約 35 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">18:30 九州黑太鼓 池袋 <span class="reserved-tag">(已預約)</span></div>
                     <div class="insight">除夕晚餐</div>
                 </div>
                 <div class="map-card">
                     <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
-                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (九州黑太鼓)</a>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (九州黑太鼓 池袋)</a>
                 </div>
             </section>
 
@@ -221,16 +251,23 @@
                     <div class="insight">☕ 08:00 早餐：客美多咖啡 東池袋一丁目</div>
                 </div>
                 <div class="transit-time">⬇️ 交通：約 35 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">11:00 <span class="booking-link" onclick="handleInternalJump('h', 'day6')">東京哈利波特影城</span> <span class="reserved-tag">(已預約)</span></div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (哈利波特影城)</a>
+                </div>
+
                 <div class="transit-time">⬇️ 交通：約 45 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">晚餐：中野商店街 / 中野百老匯</div>
                 </div>
                 <div class="map-card">
                     <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
-                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (哈利波特影城)</a>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (中野百老匯)</a>
                 </div>
             </section>
 
@@ -244,7 +281,7 @@
                 </div>
                 <div class="map-card">
                     <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
-                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (雷門)</a>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (淺草雷門)</a>
                 </div>
             </section>
 
@@ -252,10 +289,16 @@
                 <div class="day-meta"><h2>02/19 Thu <span class="lunar-title">初三</span></h2><div class="weather" data-city="Osaka">⌛</div></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Shinkansen" class="day-banner">
                 <div class="transit-time">⬇️ 交通：約 30 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">10:00 退房 ➔ 11:00 壽司郎 <span class="reserved-tag">(先預約)</span></div>
                     <div class="insight">地點：八重洲地下街</div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (八重洲地下街)</a>
+                </div>
+
                 <div class="transit-time">⬇️ 新幹線：約 2.5 小時</div>
                 <div class="card">
                     <div class="card-title">12:30 <span class="booking-link" onclick="handleInternalJump('s', 'day8')">NOZOMI 33 (東京➔新大阪)</span></div>
@@ -265,12 +308,13 @@
                     <div class="card-title">16:00 住宿 Check-in</div>
                 </div>
                 <div class="transit-time">⬇️ 交通：約 20 分鐘</div>
+                
                 <div class="card">
                     <div class="card-title">18:00 國產燒肉 <span class="reserved-tag">(已預約)</span></div>
                 </div>
                 <div class="map-card">
                     <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
-                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (國產燒肉/住宿)</a>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (國產燒肉)</a>
                 </div>
             </section>
 
@@ -308,13 +352,18 @@
                 <div class="card">
                     <div class="card-title">奈良一日遊</div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (奈良公園)</a>
+                </div>
+
                 <div class="transit-time">⬇️ 交通：約 15 分鐘</div>
                 <div class="card">
                     <div class="insight">🍱 午餐：志津香 大宮店 (可網路預約)</div>
                 </div>
-                <div class="map-card">
+                 <div class="map-card">
                     <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
-                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (奈良公園)</a>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (志津香 大宮店)</a>
                 </div>
             </section>
 
@@ -325,13 +374,18 @@
                 <div class="card">
                     <div class="card-title">11:00 但馬屋 心齋橋店 <span class="reserved-tag">(已預約)</span></div>
                 </div>
+                 <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (但馬屋 心齋橋)</a>
+                </div>
+
                 <div class="transit-time">⬇️ 交通：約 15 分鐘</div>
                 <div class="card">
                     <div class="card-title">天神橋筋商店街 / 心齋橋</div>
                 </div>
                 <div class="map-card">
                     <div class="map-container"><iframe src="https://maps.google.com/maps?q=35.7310,139.7001&z=16&output=embed"></iframe></div>
-                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (但馬屋 心齋橋)</a>
+                    <a href="https://goo.gl/maps/placeholder" target="_blank" class="map-nav-btn">開啟導航 (心齋橋)</a>
                 </div>
             </section>
             
