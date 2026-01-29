@@ -31,6 +31,7 @@
         .date-btn.active .lunar-tag { color: #ffcdd2; }
 
         /* --- 圖片樣式 --- */
+        /* 這裡可以放你的 Google Drawings 網址 */
         .main-hero { width: 100%; height: 200px; object-fit: cover; border-radius: 0 0 24px 24px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); display: block; background-color: #ddd; }
         .day-banner { width: 100%; height: 140px; object-fit: cover; border-radius: 16px; margin: 10px 0 15px 0; display: block; background-color: #eee; border: 1px solid rgba(0,0,0,0.05); }
 
@@ -48,7 +49,9 @@
         .card { background: white; border-radius: 20px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 12px; border-left: 5px solid var(--navy); }
         .card-title { font-size: 0.95rem; font-weight: 700; line-height: 1.5; margin-bottom: 5px; }
         .booking-link { color: var(--map-blue); text-decoration: underline; font-weight: bold; cursor: pointer; }
-        .insight { font-size: 0.8rem; line-height: 1.5; color: #444; background: #FAF9F6; padding: 10px; border-radius: 10px; margin-top: 8px; border-left: 3px solid var(--accent); }
+        /* 紅色強調字體，用於「已預約」 */
+        .reserved-tag { color: var(--lunar-red); font-size: 0.8rem; margin-left: 5px; }
+        .insight { font-size: 0.8rem; line-height: 1.6; color: #444; background: #FAF9F6; padding: 10px; border-radius: 10px; margin-top: 8px; border-left: 3px solid var(--accent); }
 
         .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); overflow: hidden; margin-top: 15px; border: 1px solid #EEE; }
         .map-container { width: 100%; height: 230px; background: #EEE; }
@@ -130,8 +133,8 @@
                 <div class="card">
                     <div class="card-title">3COINS 原宿旗艦店</div>
                     <div class="card-title">澀谷寶石廣場</div>
-                    <div class="card-title">澀谷 SKY (需預約)</div>
-                    <div class="insight">🏠 宿：東京都廳第一廳舍附近</div>
+                    <div class="card-title">澀谷 SKY <span class="reserved-tag">(需預約)</span></div>
+                    <div class="insight">🏠 宿：東京都廳第一廳舍32樓附近</div>
                 </div>
             </section>
 
@@ -140,7 +143,7 @@
                 <img src="https://placehold.co/800x300/EEE/333?text=Roppongi" class="day-banner">
                 <div class="card">
                     <div class="card-title">12:30 博多風龍 (秋葉原2號店)</div>
-                    <div class="card-title">14:00 貓頭鷹咖啡廳</div>
+                    <div class="card-title">14:00 貓頭鷹咖啡廳 <span class="reserved-tag">(已預約)</span></div>
                     <div class="card-title">晚上：六本木櫸坂通夜景</div>
                 </div>
             </section>
@@ -149,8 +152,11 @@
                 <div class="day-meta"><h2>02/15 Sun</h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=teamLab" class="day-banner">
                 <div class="card">
-                    <div class="card-title">13:00 <span class="booking-link" onclick="handleInternalJump('t', 'day4')">teamLab Borderless</span> (已預約)</div>
-                    <div class="card-title">Shopping</div>
+                    <div class="insight">🥞 早餐：Jonathan's 神谷町店</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">13:00 <span class="booking-link" onclick="handleInternalJump('t', 'day4')">teamLab Borderless</span> <span class="reserved-tag">(已預約)</span></div>
+                    <div class="card-title">愛宕神社 / Shopping</div>
                     <div class="insight">📍 麻布台之丘。點擊文字查看預約憑證。</div>
                 </div>
             </section>
@@ -159,13 +165,15 @@
                 <div class="day-meta"><h2>02/16 Mon <span class="lunar-title">除夕</span></h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Ginza" class="day-banner">
                 <div class="card">
-                    <div class="card-title">銀座逛街</div>
+                    <div class="card-title">銀座逛街 / 銀座藝術水族館 (備案)</div>
                     <div class="insight">
                         • On 東京銀座旗艦店<br>
-                        • Workman Colors<br>
-                        • Seria Exitmelsa 銀座店<br>
-                        • 晚餐：Mo Mo Paradise
+                        • Workman Colors / Seria Exitmelsa
                     </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">18:30 九州黑太鼓 池袋 <span class="reserved-tag">(已預約)</span></div>
+                    <div class="insight">除夕晚餐 (Momo Paradise 備案)</div>
                 </div>
             </section>
 
@@ -173,8 +181,11 @@
                 <div class="day-meta"><h2>02/17 Tue <span class="lunar-title">初一</span></h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=HarryPotter" class="day-banner">
                 <div class="card">
-                    <div class="card-title">11:00 <span class="booking-link" onclick="handleInternalJump('h', 'day6')">東京哈利波特影城</span> (已預約)</div>
+                    <div class="insight">☕ 08:00 早餐：客美多咖啡 東池袋一丁目店</div>
                     <div class="insight">🚇 交通：約 09:30 出門 (車程約25分)</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">11:00 <span class="booking-link" onclick="handleInternalJump('h', 'day6')">東京哈利波特影城</span> <span class="reserved-tag">(已預約)</span></div>
                 </div>
                 <div class="card">
                     <div class="card-title">晚餐：中野商店街 / 中野百老匯</div>
@@ -184,20 +195,25 @@
             <section class="day-section" id="day7">
                 <div class="day-meta"><h2>02/18 Wed <span class="lunar-title">初二</span></h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Asakusa" class="day-banner">
-                <div class="card"><div class="card-title">淺草國際通 (逛街)</div></div>
+                <div class="card">
+                    <div class="card-title">淺草文化體驗</div>
+                    <div class="insight">雷門 / 淺草寺 / 國際通</div>
+                </div>
             </section>
 
             <section class="day-section" id="day8">
                 <div class="day-meta"><h2>02/19 Thu <span class="lunar-title">初三</span></h2><div class="weather" data-city="Osaka">⌛</div></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Shinkansen" class="day-banner">
                 <div class="card">
-                    <div class="card-title">10:00 退房 ➔ 11:00 壽司郎(已預約)</div>
+                    <div class="card-title">10:00 退房 ➔ 11:00 壽司郎 <span class="reserved-tag">(先預約)</span></div>
                     <div class="insight">地點：八重洲地下街</div>
                 </div>
                 <div class="card">
                     <div class="card-title">12:30 <span class="booking-link" onclick="handleInternalJump('s', 'day8')">NOZOMI 33 (東京➔新大阪)</span></div>
                     <div class="insight">16:00 住宿 Check-in</div>
-                    <div class="insight">🍖 晚餐：國產燒肉</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">18:00 國產燒肉 <span class="reserved-tag">(已預約)</span></div>
                 </div>
             </section>
 
@@ -206,8 +222,7 @@
                 <img src="https://placehold.co/800x300/EEE/333?text=Tennoji" class="day-banner">
                 <div class="card">
                     <div class="card-title"><span class="booking-link" onclick="handleInternalJump('z', 'day9')">天王寺動物園</span></div>
-                    <div class="card-title">Sports Depo</div>
-                    <div class="card-title">Workman Plus</div>
+                    <div class="card-title">Sports Depo / Workman Plus</div>
                 </div>
             </section>
 
@@ -215,7 +230,7 @@
                 <div class="day-meta"><h2>02/21 Sat <span class="lunar-title">初五</span></h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Hirakata" class="day-banner">
                 <div class="card">
-                    <div class="card-title"><span class="booking-link" onclick="handleInternalJump('p', 'day10')">枚方公園 (Hirakata Park)</span></div>
+                    <div class="card-title"><span class="booking-link" onclick="handleInternalJump('p', 'day10')">枚方公園 (Hirakata Park)</span> <span class="reserved-tag">(已預約)</span></div>
                 </div>
             </section>
 
@@ -232,8 +247,11 @@
                 <div class="day-meta"><h2>02/23 Mon</h2></div>
                 <img src="https://placehold.co/800x300/EEE/333?text=Osaka" class="day-banner">
                 <div class="card">
-                    <div class="card-title">天神橋筋商店街</div>
-                    <div class="card-title">心齋橋</div>
+                    <div class="card-title">11:00 但馬屋 心齋橋店 <span class="reserved-tag">(已預約)</span></div>
+                    <div class="insight">原訂行程：豚馬屋 (確認店名)</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">天神橋筋商店街 / 心齋橋</div>
                 </div>
             </section>
             
@@ -270,14 +288,14 @@
                 <div class="back-btn" onclick="handleBack('day4')">← 返回行程 (Day 4)</div>
                 <h3 class="v-main-name">TeamLab Borderless</h3>
                 <p class="v-sub-name">Klook 電子憑證</p>
-                <div class="qr-box"><img src="teamlab_qr.jpg" alt="TeamLab QR"></div>
+                <div class="qr-box"><img src="你的_teamlab_google_drawing_網址_放在這裡" alt="TeamLab QR"></div>
                 <div class="v-row"><span>預約時間</span><span>2026/02/15 13:00</span></div>
             </div>
             
             <div id="v-h" class="voucher-card">
                  <div class="back-btn" onclick="handleBack('day6')">← 返回行程 (Day 6)</div>
                 <h3 class="v-main-name">東京哈利波特影城</h3>
-                 <div class="qr-box"><img src="hp_qr.jpg" alt="Harry Potter QR"></div>
+                <div class="qr-box"><img src="你的_哈利波特_google_drawing_網址_放在這裡" alt="Harry Potter QR"></div>
                 <div class="v-row"><span>預約時間</span><span>2026/02/17 11:00</span></div>
                 <div class="insight">建議 09:30 出門</div>
             </div>
