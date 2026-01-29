@@ -74,10 +74,11 @@
         .reserved-tag { color: var(--lunar-red); font-size: 0.8rem; margin-left: 5px; }
         .insight { font-size: 0.8rem; line-height: 1.6; color: #444; background: #FAF9F6; padding: 10px; border-radius: 10px; margin-top: 8px; border-left: 3px solid var(--accent); }
 
-        .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); overflow: hidden; margin-top: 15px; border: 1px solid #EEE; }
-        .map-container { width: 100%; height: 230px; background: #EEE; }
+        /* 地圖卡片樣式 (恢復) */
+        .map-card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); overflow: hidden; margin-top: 15px; border: 1px solid #EEE; margin-bottom: 15px; }
+        .map-container { width: 100%; height: 200px; background: #EEE; }
         .map-container iframe { width: 100%; height: 100%; border: 0; pointer-events: none; }
-        .map-nav-btn { display: flex; align-items: center; justify-content: center; padding: 16px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; border-top: 1px solid #F0F0F0; font-size: 0.95rem; }
+        .map-nav-btn { display: flex; align-items: center; justify-content: center; padding: 14px; background: #fff; text-decoration: none; color: var(--map-blue); font-weight: 800; border-top: 1px solid #F0F0F0; font-size: 0.95rem; }
 
         .booking-item { background: white; border: 1px solid #EEE; padding: 18px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 0.85rem; color: var(--navy); transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.03); width: 100%; }
         .booking-item.active-book { background: var(--navy); color: var(--white); border-color: var(--navy); }
@@ -147,6 +148,10 @@
                     </div>
                     <div class="insight">🏠 宿：NRT T3 / Airbnb</div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=Narita+Airport&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe></div>
+                    <a href="https://maps.app.goo.gl/..." target="_blank" class="map-nav-btn">開啟導航</a>
+                </div>
             </section>
 
             <section class="day-section" id="day2">
@@ -161,6 +166,10 @@
                     <div class="card-title">澀谷 SKY <span class="reserved-tag">(需預約)</span></div>
                     <div class="insight">🏠 宿：東京都廳第一廳舍32樓附近</div>
                 </div>
+                <div class="map-card">
+                    <div class="map-container"><iframe src="https://maps.google.com/maps?q=Shibuya+Sky&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe></div>
+                    <a href="https://maps.app.goo.gl/..." target="_blank" class="map-nav-btn">開啟導航</a>
+                </div>
             </section>
 
             <section class="day-section" id="day3">
@@ -173,6 +182,10 @@
                 <div class="transit-time">⬇️ 交通：約 10 分鐘</div>
                 <div class="card">
                     <div class="card-title">14:00 貓頭鷹咖啡廳 <span class="reserved-tag">(已預約)</span></div>
+                    <div class="map-card" style="margin-top:10px;">
+                        <div class="map-container"><iframe src="https://maps.google.com/maps?q=Owl+Cafe+Tokyo&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe></div>
+                        <a href="https://maps.app.goo.gl/PwoDmhN2tqT6993FA" target="_blank" class="map-nav-btn">開啟導航 (貓頭鷹)</a>
+                    </div>
                 </div>
                 <div class="transit-time">⬇️ 交通：約 35 分鐘</div>
                 <div class="card">
@@ -210,6 +223,10 @@
                 <div class="card">
                     <div class="card-title">18:30 九州黑太鼓 池袋 <span class="reserved-tag">(已預約)</span></div>
                     <div class="insight">除夕晚餐</div>
+                    <div class="map-card" style="margin-top:10px;">
+                        <div class="map-container"><iframe src="https://maps.google.com/maps?q=Kyushu+Kurodaiko+Ikebukuro&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe></div>
+                        <a href="https://maps.app.goo.gl/RFP4hHftoSyGeDyo8" target="_blank" class="map-nav-btn">開啟導航 (晚餐)</a>
+                    </div>
                 </div>
             </section>
 
@@ -223,6 +240,10 @@
                 <div class="transit-time">⬇️ 交通：約 35 分鐘</div>
                 <div class="card">
                     <div class="card-title">11:00 <span class="booking-link" onclick="handleInternalJump('h', 'day6')">東京哈利波特影城</span> <span class="reserved-tag">(已預約)</span></div>
+                     <div class="map-card" style="margin-top:10px;">
+                        <div class="map-container"><iframe src="https://maps.google.com/maps?q=Warner+Bros+Studio+Tour+Tokyo&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe></div>
+                        <a href="https://maps.app.goo.gl/..." target="_blank" class="map-nav-btn">開啟導航</a>
+                    </div>
                 </div>
                 <div class="transit-time">⬇️ 交通：約 45 分鐘</div>
                 <div class="card">
